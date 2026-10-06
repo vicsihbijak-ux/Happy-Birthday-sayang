@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun ke-26, Oktovina Pingkan Elisabet Nasaraudin! 💖</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Confetti JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #fff0f5;
+        }
+        .script-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 182, 193, 0.8)); }
+            50% { filter: drop-shadow(0 0 30px rgba(255, 105, 180, 1)); }
+        }
+        .glow-effect {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.95) rotate(-2deg); }
+        }
+        .candle-flame {
+            animation: flicker 0.5s infinite alternate;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 192, 203, 0.5);
+        }
+        .polaroid-frame {
+            background: white;
+            padding: 12px 12px 35px 12px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+        }
+        .polaroid-frame:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
+
+    <!-- AUDIO BACKGROND ELEMENT -->
+    <audio id="bg-music" loop>
+        <!-- Anda bisa mengganti link .mp3 di bawah dengan lagu pilihan Anda -->
+        <source src="https://actions.google.com/sounds/v1/ambiences/gentle_wind_chimes.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- SPLASH SCREEN: Cake & Candle -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center text-center px-4 transition-opacity duration-1000">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ff69b4_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        
+        <div class="relative z-10 max-w-md mx-auto flex flex-col items-center">
+            <h1 class="text-white text-xl md:text-2xl font-light mb-2 tracking-widest uppercase">Special Birthday For</h1>
+            <h2 class="text-pink-300 script-font text-3xl md:text-4xl mb-8 font-bold">Oktovina Pingkan Elisabet Nasaraudin</h2>
+            
+            <!-- Interactive Cake & Candle -->
+            <div id="cake-container" class="cursor-pointer glow-effect mb-8 group relative" onclick="blowCandle()">
+                <svg width="220" height="220" viewBox="0 0 200 200" class="mx-auto transition-transform duration-300 group-hover:scale-105">
+                    <ellipse cx="100" cy="175" rx="80" ry="15" fill="#fbcfe8" />
+                    <path d="M 30 140 C 30 120, 170 120, 170 140 L 165 170 C 165 180, 35 180, 35 170 Z" fill="#f472b6" />
+                    <path d="M 30 140 Q 50 155, 70 140 Q 90 155, 110 140 Q 130 155, 150 140 Q 170 155, 170 140 L 170 130 C 170 120, 30 120, 30 130 Z" fill="#ffffff" />
+                    <path d="M 45 110 C 45 95, 155 95, 155 110 L 150 140 C 150 145, 50 145, 50 140 Z" fill="#fb7185" />
+                    <path d="M 45 110 Q 65 125, 85 110 Q 105 125, 125 110 Q 145 125, 155 110 L 155 100 C 155 90, 45 90, 45 100 Z" fill="#ffffff" />
+                    <rect x="94" y="60" width="12" height="40" fill="#ffffff" rx="3" stroke="#f472b6" stroke-width="2"/>
+                    <line x1="94" y1="70" x2="106" y2="75" stroke="#f472b6" stroke-width="2"/>
+                    <line x1="94" y1="85" x2="106" y2="90" stroke="#f472b6" stroke-width="2"/>
+                    <g id="flame" class="candle-flame">
+                        <ellipse cx="100" cy="45" rx="6" ry="12" fill="#fbbf24" />
+                        <ellipse cx="100" cy="43" rx="3" ry="8" fill="#fef08a" />
+                    </g>
+                </svg>
+                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white text-xs px-4 py-1.5 rounded-full shadow-lg font-medium whitespace-nowrap animate-bounce">
+                    👆 Sentuh & Tiup Lilinnya!
+                </div>
+            </div>
+
+            <p class="text-gray-300 text-sm mt-4 tracking-wide">Ketuk kue untuk memulai kejutan dan menyalakan musik otomatis ✨</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="opacity-0 pointer-events-none transition-opacity duration-1000 min-h-screen flex flex-col justify-between pb-12">
+        
+        <div class="absolute top-0 left-0 w-full overflow-hidden pointer-events-none z-0">
+            <div class="absolute -top-20 -left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float"></div>
+            <div class="absolute top-40 -right-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float" style="animation-delay: 1s;"></div>
+        </div>
+
+        <!-- Header / Manual Music Toggle Button -->
+        <header class="relative z-10 w-full max-w-4xl mx-auto p-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="bg-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">✨ 26th Birthday</span>
+            </div>
+            <button onclick="toggleMusic()" id="music-btn" class="bg-white/80 hover:bg-white text-pink-600 px-4 py-2 rounded-full shadow-md text-sm font-medium flex items-center space-x-2 border border-pink-200 transition">
+                <i id="music-icon" class="fa-solid fa-pause"></i>
+                <span id="music-text">Jeda Musik</span>
+            </button>
+        </header>
+
+        <!-- Hero Greeting Section -->
+        <main class="relative z-10 max-w-3xl mx-auto px-4 text-center my-6">
+            <div class="glass-card rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden border-2 border-pink-200">
+                <div class="absolute -right-10 -bottom-10 text-pink-100 text-9xl font-bold select-none pointer-events-none">26</div>
+                
+                <div class="inline-block p-3 bg-pink-100 rounded-full text-pink-600 mb-4 shadow-inner">
+                    <i class="fa-solid fa-crown text-2xl"></i>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-2 script-font">Selamat Ulang Tahun</h1>
+                <h2 class="text-2xl md:text-4xl font-extrabold text-pink-600 mb-6 tracking-wide">Oktovina Pingkan Elisabet Nasaraudin</h2>
+                
+                <div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-pink-600 mx-auto rounded-full mb-6"></div>
+                
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-6 font-light max-w-xl mx-auto">
+                    Selamat memperingati hari kelahiran yang ke-26! Semoga di usia yang baru ini, hari-harimu dipenuhi dengan kebahagiaan yang melimpah, senyuman yang tak pernah surut, kesehatan, serta semua impian indahmu satu persatu terwujud. Puji Tuhan! 💖✨
+                </p>
+
+                <!-- Ayat Alkitab Filipi 4:13 -->
+                <div class="my-6 p-6 bg-pink-50/90 border border-pink-200 rounded-2xl shadow-inner text-center">
+                    <div class="text-pink-600 text-sm font-bold tracking-wider uppercase mb-1">
+                        <i class="fa-solid fa-book-bible mr-1"></i> Filipi 4:13
+                    </div>
+                    <p class="text-gray-700 italic text-sm md:text-base font-medium leading-relaxed">
+                        "Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku."
+                    </p>
+                    <p class="text-xs text-pink-500 mt-2 font-light">
+                        Semoga ayat ini selalu menjadi sumber kekuatan dan semangat di umur yang baru untuk Sayang. Puji Tuhan! 🙏✨
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm text-pink-700 font-medium">
+                    <span class="bg-pink-100 px-3 py-1.5 rounded-full"><i class="fa-solid fa-heart mr-1"></i> Penuh Kasih</span>
+                    <span class="bg-pink-100 px-3 py-1.5 rounded-full"><i class="fa-solid fa-star mr-1"></i> Cantik & Anggun</span>
+                    <span class="bg-pink-100 px-3 py-1.5 rounded-full"><i class="fa-solid fa-face-smile mr-1"></i> Selalu Ceria</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Gallery Selection Buttons -->
+        <section class="relative z-10 max-w-4xl mx-auto px-4 my-8">
+            <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 mb-6 script-font">Pilih Kenangan & Momen Indah 📸</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Pacar -->
+                <button onclick="openGallery('pacar')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Pacar</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Momen Romantis ❤️</span>
+                </button>
+
+                <!-- Lucu -->
+                <button onclick="openGallery('lucu')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-face-laugh-squint"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Lucu</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Gokil & Imut 😄</span>
+                </button>
+
+                <!-- Cantik -->
+                <button onclick="openGallery('cantik')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Cantik</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Anggun & Elegan 👑</span>
+                </button>
+
+                <!-- Orang Terdekat -->
+                <button onclick="openGallery('keluarga')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Orang Terdekat</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Keluarga & Sahabat 👨‍👩‍👧‍👦</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- GALLERY MODAL -->
+        <div id="gallery-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
+            <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl border-4 border-pink-300">
+                <button onclick="closeGallery()" class="absolute top-4 right-4 bg-pink-100 hover:bg-pink-500 hover:text-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="text-center mb-8">
+                    <span id="modal-category-badge" class="bg-pink-100 text-pink-600 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider">Galeri</span>
+                    <h3 id="modal-title" class="text-2xl md:text-3xl font-bold text-gray-800 mt-2 script-font">Koleksi Foto</h3>
+                    <p class="text-gray-500 text-xs mt-1">Masukkan link online foto Anda di dalam data galeri kode JavaScript di bawah! 🖼️</p>
+                </div>
+
+                <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Dynamic items rendered via script -->
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-xs text-gray-400 mt-8 relative z-10">
+            <p>Dibuat dengan cinta khusus untuk <span class="text-pink-500 font-semibold">Oktovina Pingkan Elisabet Nasaraudin</span> 💖</p>
+        </footer>
+    </div>
+
+    <script>
+        // TEMPAT MEMASUKKAN LINK FOTO ONLINE ANDA:
+        // Ganti URL di dalam tanda kutip `img: "..."` di bawah dengan direct link foto online dari Postimages / Imgur Anda.
+        const galleryData = {
+            pacar: [
+                { title: "Momen Romantis 1", desc: "Senyum paling manis di sisi tercinta ❤️", img: "https://i.postimg.cc/placeholder1.jpg" },
+                { title: "Momen Romantis 2", desc: "Menghabiskan waktu indah bersama ✨", img: "https://i.postimg.cc/placeholder2.jpg" },
+                { title: "Momen Romantis 3", desc: "Cinta dan kebahagiaan abadi 🥰", img: "https://i.postimg.cc/placeholder3.jpg" }
+            ],
+            lucu: [
+                { title: "Ekspresi Kocak 1", desc: "Gaya paling gemesin dan bikin tertawa 😄", img: "https://i.postimg.cc/placeholder4.jpg" },
+                { title: "Ekspresi Kocak 2", desc: "Muka jail tapi tetap cantik ya kan? 😜", img: "https://i.postimg.cc/placeholder5.jpg" },
+                { title: "Ekspresi Kocak 3", desc: "Bikin hari-hari selalu ceria! 🎉", img: "https://i.postimg.cc/placeholder6.jpg" }
+            ],
+            cantik: [
+                { title: "Anggun & Mempesona 1", desc: "Sinar kecantikan sejati di hari ulang tahun 👑", img: "https://i.postimg.cc/placeholder7.jpg" },
+                { title: "Anggun & Mempesona 2", desc: "Elegan dalam setiap balutan busana ✨", img: "https://i.postimg.cc/placeholder8.jpg" },
+                { title: "Anggun & Mempesona 3", desc: "Putri ratu hari ini! 💖", img: "https://i.postimg.cc/placeholder9.jpg" }
+            ],
+            keluarga: [
+                { title: "Orang Terdekat 1", desc: "Dikelilingi oleh orang-orang tersayang 👨‍👩‍👧‍👦", img: "https://i.postimg.cc/placeholder10.jpg" },
+                { title: "Orang Terdekat 2", desc: "Kebersamaan yang penuh kehangatan 🥰", img: "https://i.postimg.cc/placeholder11.jpg" },
+                { title: "Orang Terdekat 3", desc: "Dukungan dan cinta tanpa batas 🌟", img: "https://i.postimg.cc/placeholder12.jpg" }
+            ]
+        };
+
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+
+        // Fungsi saat lilin ditiup/ditekan -> Musik langsung otomatis menyala!
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            if(flame) flame.style.display = 'none';
+
+            // Nyalakan musik otomatis
+            if(bgMusic) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    if(musicIcon) musicIcon.className = 'fa-solid fa-pause';
+                    if(musicText) musicText.innerText = 'Jeda Musik';
+                }).catch(e => {
+                    console.log("Autoplay musik diizinkan setelah interaksi pengguna:", e);
+                });
+            }
+
+            triggerConfetti();
+
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    const main = document.getElementById('main-content');
+                    main.classList.remove('opacity-0', 'pointer-events-none');
+                }, 1000);
+            }, 600);
+        }
+
+        // Pemicu Confetti
+        function triggerConfetti() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff69b4', '#ff1493', '#ffc0cb', '#ffffff', '#ffd700']
+            });
+
+            setTimeout(() => {
+                confetti({
+                    particleCount: 60,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff69b4', '#ff1493']
+                });
+                confetti({
+                    particleCount: 60,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ffc0cb', '#ffffff']
+                });
+            }, 300);
+        }
+
+        // Buka Galeri Kategori
+        function openGallery(category) {
+            const modal = document.getElementById('gallery-modal');
+            const titleEl = document.getElementById('modal-title');
+            const badgeEl = document.getElementById('modal-category-badge');
+            const gridEl = document.getElementById('gallery-grid');
+
+            const titles = {
+                pacar: "Koleksi Bersama Pacar ❤️",
+                lucu: "Koleksi Momen Lucu 😄",
+                cantik: "Koleksi Potret Cantik 👑",
+                keluarga: "Koleksi Orang Terdekat 👨‍👩‍👧‍👦"
+            };
+
+            titleEl.innerText = titles[category];
+            badgeEl.innerText = category.toUpperCase();
+
+            gridEl.innerHTML = '';
+            galleryData[category].forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'polaroid-frame rounded-2xl flex flex-col items-center cursor-pointer transform hover:scale-105 transition';
+                card.onclick = () => triggerConfetti();
+                
+                card.innerHTML = `
+                    <div class="w-full aspect-square overflow-hidden rounded-xl mb-3 bg-pink-50 relative flex items-center justify-center">
+                        <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/ffb6c1/ffffff?text=Foto+Gagal+Dimuat';">
+                    </div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">${item.title}</h4>
+                    <p class="text-xs text-gray-500 text-center font-light">${item.desc}</p>
+                `;
+                gridEl.appendChild(card);
+            });
+
+            modal.classList.remove('hidden');
+            triggerConfetti();
+        }
+
+        // Tutup Galeri
+        function closeGallery() {
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.add('hidden');
+        }
+
+        // Kontrol Musik Manual (Tombol Atas)
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.className = 'fa-solid fa-music';
+                musicText.innerText = 'Putar Musik';
+                isPlaying = false;
+            } else {
+                bgMusic.play().catch(e => console.log("Audio play error"));
+                musicIcon.className = 'fa-solid fa-pause';
+                musicText.innerText = 'Jeda Musik';
+                isPlaying = true;
+            }
+        }
+    </script>
+</body>
+</html>
