@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Ulang Tahun ke-26, Oktovina Pingkan Elisabet Nasaraudin! 💖</title>
+    <title>Selamat Ulang Tahun ke-26, Oktovina Pingkan Elisabet Nasarudin! 💖</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons -->
@@ -57,9 +57,52 @@
             transform: translateY(-5px) rotate(1deg);
             box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
         }
+        /* Styling untuk Balon Melayang */
+.balloon-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1; /* Supaya ada di belakang teks tapi tetap terlihat */
+}
+
+.balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 40px;
+    height: 50px;
+    background-color: rgba(255, 105, 180, 0.6);
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    animation: flyUp 8s infinite linear;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 18px;
+    width: 2px;
+    height: 10px;
+    background-color: rgba(200, 200, 200, 0.6);
+}
+
+@keyframes flyUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(20deg);
+        opacity: 0;
+    }
+}
     </style>
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
+<body class="<!-- Wadah Background Balon -->
+<div class="balloon-container" id="balloon-container"></div> bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
 
     <!-- AUDIO BACKGROND ELEMENT -->
     <audio id="bg-music" loop>
@@ -404,7 +447,35 @@
                 musicIcon.className = 'fa-solid fa-pause';
                 musicText.innerText = 'Jeda Musik';
                 isPlaying = true;
-            }
+            }// Fungsi Membuat Balon Bergerak Otomatis
+function createBalloon() {
+    const container = document.getElementById('balloon-container');
+    if (!container) return;
+
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+
+    // Mengatur posisi muncul secara acak di lebar layar
+    balloon.style.left = Math.random() * window.innerWidth + 'px';
+    
+    // Mengatur variasi warna balon secara acak
+    const colors = ['rgba(255, 105, 180, 0.6)', 'rgba(255, 182, 193, 0.7)', 'rgba(255, 192, 203, 0.6)', 'rgba(255, 20, 147, 0.5)'];
+    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    // Mengatur kecepatan animasi berbeda-beda tiap balon
+    const animDuration = Math.random() * 4 + 6; // antara 6 sampai 10 detik
+    balloon.style.animationDuration = animDuration + 's';
+
+    container.appendChild(balloon);
+
+    // Hapus elemen balon setelah animasinya selesai agar memori tidak penuh
+    setTimeout(() => {
+        balloon.remove();
+    }, animDuration * 1000);
+}
+
+// Munculkan balon baru setiap 700 milidetik
+setInterval(createBalloon, 700);
         }
     </script>
 </body>
