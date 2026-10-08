@@ -15,8 +15,8 @@
     <style>
         body {
             /* STYLING BALON DI DEPAN (FOREGROUND) */
-        
-        }.balloon-container {
+        }
+        .balloon-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -106,8 +106,8 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
-    <!-- Wadah Background Balon -->
-    <div class="balloon-container" id="balloon-container"></div>
+ <!-- WADAH BALON DI DEPAN (FOREGROUND) -->
+    <div class="balloon-container" id="balloon-container"></div>   
 
     <!-- AUDIO BACKGROND ELEMENT -->
     <audio id="bg-music" loop>
@@ -452,8 +452,9 @@
                 musicIcon.className = 'fa-solid fa-pause';
                 musicText.innerText = 'Jeda Musik';
                 isPlaying = true;
-            }// Fungsi Membuat Balon Bergerak Otomatis
-function createBalloon() {
+            }
+            // Fungsi Membuat Balon Bergerak Otomatis
+            function createBalloon() {
     const container = document.getElementById('balloon-container');
     if (!container) return;
 
@@ -478,10 +479,50 @@ function createBalloon() {
         balloon.remove();
     }, animDuration * 1000);
 }
-
-// Munculkan balon baru secara berkala setiap 600 milidetik
-        setInterval(createBalloon, 150);
+// Munculkan balon baru secara berkala setiap 600 milideti
+            setInterval(createBalloon, 150);
     }
     </script>
+    <!-- Pastikan tag script ini ada sebelum fungsi balon -->
+    <script>
+        // Fungsi Membuat Balon Melayang dari Bawah ke Atas
+        function createBalloon() {
+            const container = document.getElementById('balloon-container');
+            if (!container) return;
+
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+
+            balloon.style.left = Math.random() * window.innerWidth + 'px';
+            
+            const colors = [
+                'rgba(255, 105, 180, 0.85)', 
+                'rgba(255, 20, 147, 0.8)', 
+                'rgba(255, 182, 193, 0.9)', 
+                'rgba(255, 107, 129, 0.85)',
+                'rgba(240, 147, 251, 0.85)'
+            ];
+            balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            const animDuration = Math.random() * 3 + 5; 
+            balloon.style.animationDuration = animDuration + 's';
+
+            container.appendChild(balloon);
+
+            setTimeout(() => {
+                balloon.remove();
+            }, animDuration * 1000);
+        }
+
+        // Jalankan otomatis saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 0; i < 6; i++) {
+                createBalloon();
+            }
+            setInterval(createBalloon, 400);
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
