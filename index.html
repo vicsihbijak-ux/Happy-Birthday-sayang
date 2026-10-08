@@ -177,7 +177,7 @@
                 </div>
                 
                 <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-2 script-font">Selamat Ulang Tahun</h1>
-                <h2 class="text-2xl md:text-4xl font-extrabold text-pink-600 mb-6 tracking-wide">Oktovina Pingkan Elisabet Nasaraudin</h2>
+                <h2 class="text-2xl md:text-4xl font-extrabold text-pink-600 mb-6 tracking-wide">Oktovina Pingkan Elisabet Nasarudin</h2>
                 
                 <div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-pink-600 mx-auto rounded-full mb-6"></div>
                 
@@ -479,8 +479,12 @@ function createBalloon() {
     }, animDuration * 1000);
 }
 
-// Munculkan balon baru setiap 700 milidetik
-setInterval(createBalloon, 700);
+// Munculkan balon baru secara berkala setiap 600 milidetik
+        setInterval(createBalloon, 600);
+
+        // --- TAMBAHKAN KODE INI SUPAYA LANGSUNG KELUAR BEGITU DIBUKA ---
+        for (let i = 0; i < 8; i++) {
+            createBalloon();
         }
     </script>
 </body>
