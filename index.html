@@ -18,51 +18,6 @@
             overflow-x: hidden;
             background-color: #fff0f5;
         }
-        /* STYLING BALON DI DEPAN (FOREGROUND) */
-        .balloon-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none; /* Agar tidak mengganggu klik tombol lain */
-            z-index: 60; /* Berada di depan konten */
-        }
-        .balloon {
-            position: absolute;
-            bottom: -150px;
-            width: 45px;
-            height: 55px;
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            animation: flyUp 7s infinite linear;
-            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .balloon::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 21px;
-            width: 2px;
-            height: 15px;
-            background-color: rgba(150, 150, 150, 0.8);
-        }
-        @keyframes flyUp {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0.9;
-            }
-            50% {
-                transform: translateY(-55vh) translateX(15px) rotate(10deg);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(-110vh) translateX(-15px) rotate(-10deg);
-                opacity: 0;
-        }
         .script-font {
             font-family: 'Dancing Script', cursive;
         }
@@ -102,8 +57,6 @@
             transform: translateY(-5px) rotate(1deg);
             box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
         }
-            }
-}
     </style>
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
