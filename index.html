@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun ke-26, Oktovina Pingkan Elisabet Nasarudin! 💖</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Confetti JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #fff0f5;
+        }
+        .balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 60;
+        }
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 55px;
+            height: 70px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: flyUp linear infinite;
+            box-shadow: inset -8px -8px 0px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background-color: rgba(180, 180, 180, 0.8);
+        }
+        @keyframes flyUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.95;
+            }
+            50% {
+                transform: translateY(-55vh) translateX(25px) rotate(6deg);
+                opacity: 0.95;
+            }
+            100% {
+                transform: translateY(-110vh) translateX(-25px) rotate(-6deg);
+                opacity: 0;
+            }
+        }
+
+        #notification-popup {
+            position: fixed;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 92%;
+            max-width: 420px;
+        }
+        #notification-popup.show {
+            top: 16px;
+        }
+
+        .script-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 182, 193, 0.8)); }
+            50% { filter: drop-shadow(0 0 30px rgba(255, 105, 180, 1)); }
+        }
+        .glow-effect {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.95) rotate(-2deg); }
+        }
+        .candle-flame {
+            animation: flicker 0.5s infinite alternate;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 192, 203, 0.5);
+        }
+        .polaroid-frame {
+            background: white;
+            padding: 12px 12px 35px 12px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+        }
+        .polaroid-frame:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
+    
+    <!-- NOTIFIKASI POP-UP ALA WHATSAPP -->
+    <div id="notification-popup">
+        <div class="bg-white/95 backdrop-blur-md border border-gray-200 p-3.5 rounded-2xl shadow-2xl flex items-center space-x-3.5">
+            <div class="relative shrink-0">
+                <img id="notif-avatar" src="IMG_20261007_175525.jpg" alt="Foto Profil" class="w-12 h-12 rounded-full object-cover border-2 border-pink-400 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
+                <div class="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-white">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center mb-0.5">
+                    <h5 id="notif-name" class="font-bold text-gray-900 text-sm truncate">Nama Pengirim</h5>
+                    <span class="text-[10px] text-gray-400 shrink-0 ml-2">Baru saja</span>
+                </div>
+                <p id="notif-message" class="text-xs text-gray-600 truncate leading-snug">Isi pesan ucapan akan muncul di sini...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WADAH BALON BIASA DI DEPAN -->
+    <div class="balloon-container" id="balloon-container"></div>   
+
+    <!-- AUDIO BACKGROUND & SOUND EFFECT ELEMENT -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="from eden - hozier (sped up) [kt2QgrnW6uo].mp3" type="audio/mpeg">
+    </audio>
+    <audio id="candle-sound" preload="auto">
+        <source src="Trumpet.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hat-sound" preload="auto">
+        <source src="yeay.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- SPLASH SCREEN 1: KUE & LILIN (Khusus Mode Barcode) -->
+    <div id="splash-barcode" class="fixed inset-0 z-50 bg-slate-950 hidden flex-col items-center justify-center text-center px-4 transition-opacity duration-1000">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ff69b4_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        
+        <div class="relative z-10 max-w-md mx-auto flex flex-col items-center">
+            <h1 class="text-white text-xl md:text-2xl font-light mb-2 tracking-widest uppercase">Special Birthday For</h1>
+            <h2 class="text-pink-300 script-font text-3xl md:text-4xl mb-8 font-bold">Oktovina Pingkan Elisabet Nasarudin</h2>
+            
+            <div id="cake-container" class="cursor-pointer glow-effect mb-8 group relative" onclick="blowCandle()">
+                <svg width="220" height="220" viewBox="0 0 200 200" class="mx-auto transition-transform duration-300 group-hover:scale-105">
+                    <ellipse cx="100" cy="175" rx="80" ry="15" fill="#fbcfe8" />
+                    <path d="M 30 140 C 30 120, 170 120, 170 140 L 165 170 C 165 180, 35 180, 35 170 Z" fill="#f472b6" />
+                    <path d="M 30 140 Q 50 155, 70 140 Q 90 155, 110 140 Q 130 155, 150 140 Q 170 155, 170 140 L 170 130 C 170 120, 30 120, 30 130 Z" fill="#ffffff" />
+                    <path d="M 45 110 C 45 95, 155 95, 155 110 L 150 140 C 150 145, 50 145, 50 140 Z" fill="#fb7185" />
+                    <path d="M 45 110 Q 65 125, 85 110 Q 105 125, 125 110 Q 145 125, 155 110 L 155 100 C 155 90, 45 90, 45 100 Z" fill="#ffffff" />
+                    <rect x="94" y="60" width="12" height="40" fill="#ffffff" rx="3" stroke="#f472b6" stroke-width="2"/>
+                    <line x1="94" y1="70" x2="106" y2="75" stroke="#f472b6" stroke-width="2"/>
+                    <line x1="94" y1="85" x2="106" y2="90" stroke="#f472b6" stroke-width="2"/>
+                    <g id="flame" class="candle-flame">
+                        <ellipse cx="100" cy="45" rx="6" ry="12" fill="#fbbf24" />
+                        <ellipse cx="100" cy="43" rx="3" ry="8" fill="#fef08a" />
+                    </g>
+                </svg>
+                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white text-xs px-4 py-1.5 rounded-full shadow-lg font-medium whitespace-nowrap animate-bounce">
+                    👆 Sentuh & Tiup Lilinnya!
+                </div>
+            </div>
+
+            <p class="text-gray-300 text-sm mt-4 tracking-wide">cuma ini yang kita bisa beking semoga suka 😩😮‍💨✨</p>
+        </div>
+    </div>
+
+    <!-- SPLASH SCREEN 2: TOPI ULANG TAHUN (Khusus Mode Link Biasa) -->
+    <div id="splash-normal" class="fixed inset-0 z-50 bg-pink-900/90 backdrop-blur-md hidden flex-col items-center justify-center text-center px-6 transition-opacity duration-1000">
+        <div class="max-w-md mx-auto text-white flex flex-col items-center">
+            <h2 class="text-xl md:text-2xl font-light tracking-wide mb-2">Selamat Datang di Project Ucapan</h2>
+            <h1 class="text-pink-300 script-font text-3xl md:text-4xl font-bold mb-6">Oktovina Pingkan Elisabet Nasarudin ke-26 Thn 🎉</h1>
+            
+            <div onclick="enterFromHat()" class="cursor-pointer my-6 transform hover:scale-110 transition duration-300 bg-white/10 p-6 rounded-full border-2 border-pink-300/50 shadow-2xl animate-bounce">
+                <i class="fa-solid fa-hat-wizard text-6xl md:text-7xl text-pink-300"></i>
+            </div>
+            
+            <p class="text-xs md:text-sm text-pink-200 mt-4 animate-pulse">
+                👇 Tekan Topi di Atas Untuk Masuk Halaman Ucapan & Foto ✨
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="opacity-0 pointer-events-none transition-opacity duration-1000 min-h-screen flex flex-col justify-between pb-12">
+        
+        <div class="absolute top-0 left-0 w-full overflow-hidden pointer-events-none z-0">
+            <div class="absolute -top-20 -left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float"></div>
+            <div class="absolute top-40 -right-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float" style="animation-delay: 1s;"></div>
+        </div>
+
+        <!-- Header / Manual Music Toggle Button -->
+        <header class="relative z-10 w-full max-w-4xl mx-auto p-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="bg-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">✨ 26th Birthday</span>
+            </div>
+            <button onclick="toggleMusic()" id="music-btn" class="bg-white/80 hover:bg-white text-pink-600 px-4 py-2 rounded-full shadow-md text-sm font-medium flex items-center space-x-2 border border-pink-200 transition">
+                <i id="music-icon" class="fa-solid fa-pause"></i>
+                <span id="music-text">Jeda Musik</span>
+            </button>
+        </header>
+
+        <!-- Hero Greeting Section -->
+        <main class="relative z-10 max-w-3xl mx-auto px-4 text-center my-6">
+            <div class="glass-card rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden border-2 border-pink-200">
+                <div class="absolute -right-10 -bottom-10 text-pink-100 text-9xl font-bold select-none pointer-events-none">26</div>
+                
+                <div class="inline-block p-3 bg-pink-100 rounded-full text-pink-600 mb-4 shadow-inner">
+                    <i class="fa-solid fa-crown text-2xl"></i>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-2 script-font">Selamat Ulang Tahun</h1>
+                <h2 class="text-2xl md:text-4xl font-extrabold text-pink-600 mb-6 tracking-wide">Oktovina Pingkan Elisabet Nasarudin</h2>
+                
+                <div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-pink-600 mx-auto rounded-full mb-6"></div>
+                
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-6 font-light max-w-xl mx-auto">
+                    Puji Tuhan🥳 Selamat memperingati hari kelahiran yang ke-26 sayang! Semoga di usia yang baru ini, hari-harimu dipenuhi dengan kebahagiaan yang melimpah, senyuman yang tak pernah surut, kesehatan, serta semua impian indahmu satu persatu terwujud💖✨
+                </p>
+
+                <!-- Ayat Alkitab Filipi 4:13 -->
+                <div class="my-6 p-6 bg-pink-50/90 border border-pink-200 rounded-2xl shadow-inner text-center">
+                    <div class="text-pink-600 text-sm font-bold tracking-wider uppercase mb-1">
+                        <i class="fa-solid fa-book-bible mr-1"></i> Filipi 4:13
+                    </div>
+                    <p class="text-gray-700 italic text-sm md:text-base font-medium leading-relaxed">
+                        "Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku."
+                    </p>
+                    <p class="text-xs text-pink-500 mt-2 font-light">
+                        Semoga ayat ini selalu menjadi sumber kekuatan dan semangat di umur yang baru untuk Sayang🙏✨
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3 text-xs md:text-sm text-pink-700 font-medium">
+                    <span class="bg-pink-100 px-3 py-1.5 rounded-full"><i class="fa-solid fa-heart mr-1"></i> Penuh Kasih</span>
+                    <span class="bg-pink-100 px-3 py-1.5 rounded-full"><i class="fa-solid fa-star mr-1"></i> Cantik & Anggun</span>
+                    <span class="bg-pink-100 px-3 py-1.5 rounded-full"><i class="fa-solid fa-face-smile mr-1"></i> Selalu Ceria</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- AREA UCAPAN & DOA (Hanya Muncul di Mode Link Biasa) -->
+        <section id="comment-section" class="relative z-10 max-w-2xl mx-auto px-4 my-8 w-full">
+            <div class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-2 border-pink-200">
+                <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 mb-2 script-font">Kirim Ucapan & Doa 💌</h3>
+                <p class="text-center text-xs text-gray-500 mb-6">Tulis ucapanmu di sini, pesannya akan tersinkron secara online dan muncul sebagai notifikasi pop-up di layar!</p>
+                
+                <form id="wish-form" onsubmit="submitWish(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Kamu:</label>
+                        <input type="text" id="sender-name" required placeholder="Contoh: Kakak / Sahabat / Teman" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm bg-white/90">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Foto Profil Kamu (Opsional):</label>
+                        <input type="file" id="sender-photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-pink-100 file:text-pink-700 hover:file:bg-pink-200 cursor-pointer">
+                        <span class="text-[10px] text-gray-400 block mt-1">*Bisa pilih foto selfie dari kamera atau galeri HP</span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Pesan / Ucapan Ulang Tahun:</label>
+                        <textarea id="sender-message" required rows="3" placeholder="Tulis doa dan ucapan terbaikmu di sini..." class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm bg-white/90"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">PIN Rahasia (4 Angka untuk Hapus Ucapan):</label>
+                        <input type="password" id="sender-pin" required maxlength="4" placeholder="Misal: 1234" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm bg-white/90">
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 rounded-xl shadow-lg transition duration-300 text-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Kirim Ucapan Online 💌</span>
+                    </button>
+                </form>
+
+                <!-- Daftar Ucapan Masuk -->
+                <div class="mt-8">
+                    <h4 class="font-bold text-gray-800 text-sm mb-4 flex items-center justify-between">
+                        <span>Daftar Ucapan Online (<span id="wish-count">0</span>)</span>
+                        <span class="text-xs text-pink-500 font-normal">Sinkronisasi Real-time</span>
+                    </h4>
+                    <div id="wishes-list" class="space-y-3 max-h-80 overflow-y-auto pr-2">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Selection Buttons -->
+        <section class="relative z-10 max-w-4xl mx-auto px-4 my-8">
+            <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 mb-6 script-font">Pilih Kenangan & Momen Indah 📸</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Pacar -->
+                <button onclick="openGallery('pacar')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Pacar</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Momen Romantis ❤️</span>
+                </button>
+
+                <!-- Lucu -->
+                <button onclick="openGallery('lucu')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-face-laugh-squint"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Lucu</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Gokil & Imut 😄</span>
+                </button>
+
+                <!-- Cantik -->
+                <button onclick="openGallery('cantik')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Cantik</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Anggun & Elegan 👑</span>
+                </button>
+
+                <!-- Orang Terdekat -->
+                <button onclick="openGallery('keluarga')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <span class="font-bold text-base md:text-lg">Orang Terdekat</span>
+                    <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Keluarga & Sahabat 👨‍👩‍👧‍👦</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- GALLERY MODAL -->
+        <div id="gallery-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
+            <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl border-4 border-pink-300">
+                <button onclick="closeGallery()" class="absolute top-4 right-4 bg-pink-100 hover:bg-pink-500 hover:text-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="text-center mb-8">
+                    <span id="modal-category-badge" class="bg-pink-100 text-pink-600 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider">Galeri</span>
+                    <h3 id="modal-title" class="text-2xl md:text-3xl font-bold text-gray-800 mt-2 script-font">Koleksi Foto</h3>
+                </div>
+
+                <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Dynamic items rendered via script -->
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-xs text-gray-400 mt-8 relative z-10">
+            <p>Dibuat dengan cinta khusus untuk <span class="text-pink-500 font-semibold">Oktovina Pingkan Elisabet Nasarudin</span> 💖</p>
+        </footer>
+    </div>
+
+    <script>
+        const galleryData = {
+            pacar: [
+                { title: "Momen Romantis 1", desc: "Senyum paling manis di sisi tercinta ❤️", img: "IMG_20261007_175525.jpg" },
+                { title: "Momen Romantis 2", desc: "Menghabiskan waktu indah bersama ✨", img: "IMG_20261007_185420.jpg" },
+                { title: "Momen Romantis 3", desc: "Cinta dan kebahagiaan abadi 🥰", img: "IMG_20261007_185541.jpg" },
+                { title: "Momen Romantis 4", desc: "disaat Natal Juga sama-sama 🎄", img: "IMG_20261007_185753.jpg" }, 
+                { title: "Momen Romantis 5", desc: "sedang duduk so siksa yang", img: "IMG_20261007_185908.jpg" },
+                { title: "Momen Romantis 6", desc: "pink itam situ e ...🤣", img: "IMG_20261007_185658.jpg" },
+                { title: "Momen Romantis 7", desc: "ihh..ihh..imutnya yang tpe sei", img: "IMG_20261007_190013.jpg" },
+                { title: "Momen Romantis 8", desc: "waktu sayang masih kurus😂", img: "IMG_20261007_190201.jpg" },
+                { title: "Momen Romantis 9", desc: "ta rasa ganteng sx dsini yang🤣🙏", img: "IMG_20261007_190415.jpg" },
+                { title: "Momen Romantis 10", desc: "dri smua foto ini sih yang paling terpaksa👩‍❤️‍👨", img: "IMG_20261007_191003.jpg" },
+                { title: "Momen Romantis 11", desc: "sok skali dpe muka 🤣🙏", img: "IMG_20261007_190741.jpg" },
+                { title: "Momen Romantis 12", desc: "dri beberapa foto ini yang paling tsuka, sayang yang mana?", img: "IMG_20261007_191032.jpg" },
+            ],
+            lucu: [
+                { title: "Ekspresi Kocak 1", desc: "Gaya paling gemesin dan bikin tertawa 😄", img: "Lucu1.jpg" },
+                { title: "Ekspresi Kocak 2", desc: "dpe aura mana² jo kuat sx😅", img: "Lucu2.jpg" },
+                { title: "Ekspresi Kocak 3", desc: "nimboleh mo bilang akang e...🗿", img: "Lucu3.jpg" },
+                { title: "Ekspresi Kocak 4", desc: "Gaya cicka kwa itu e...😭😭😭", img: "Lucu4.jpg" },
+                { title: "Ekspresi Kocak 5", desc: "waktu masih jadi petani🤣🤣🤣", img: "Lucu5.jpg" },
+                { title: "Ekspresi Kocak 6", desc: "dpa paksa ba foto ini koman..🤣🤣🤣", img: "Lucu6.jpg" }
+            ],
+            cantik: [
+                { title: "Anggun & Mempesona 1", desc: "yang Ultah di muka KFC dgn Nurul ada kue🥳", img: "Ctk1.jpg" },
+                { title: "Anggun & Mempesona 2", desc: "Baju ijo versi kurus kang ini?🤣", img: "Ctk2.jpg" },
+                { title: "Anggun & Mempesona 3", desc: "cantik nyooo 💖", img: "Ctk3.jpg" },
+                { title: "Anggun & Mempesona 4", desc: "Pas Pamer rambu baru🫡", img: "Ctk4.jpg" },
+                { title: "Anggun & Mempesona 5", desc: "klo ini so lupa foto kapan tapi cantiknya euy😘", img: "Ctk5.jpg" },
+                { title: "Anggun & Mempesona 6", desc: "Baju Putih leh cocok💯", img: "Ctk6.jpg" },
+                { title: "Anggun & Mempesona 7", desc: "SPI Vibes 🤣", img: "Ctk7.jpg" },
+                { title: "Anggun & Mempesona 8", desc: "ada bintang di kepala? bidadari kah ini?😱", img: "Ctk8.jpg" },
+                { title: "Anggun & Mempesona 9", desc: "Biru-Biru 2", img: "Ctk9.jpg" },
+                { title: "Anggun & Mempesona 10", desc: "Silau yang? Matahari tase pindah jo?🫡", img: "Ctk10.jpg" },
+                { title: "Anggun & Mempesona 11", desc: "dpa lia dewasa mar kluakan anak anak😭", img: "Ctk11.jpg" },
+                { title: "Anggun & Mempesona 12", desc: "cantik, kalem, hangat, bking malele🫠", img: "Ctk12.jpg" },
+                { title: "Anggun & Mempesona 13", desc: "Background gorden hitam mawar merah cocok lagi😅", img: "Ctk13.jpg" },
+                { title: "Anggun & Mempesona 14", desc: "klo ini mo stel aesthetic 😆", img: "Ctk14.jpg" },
+                { title: "Anggun & Mempesona 15", desc: "satu satunya lari pagi, itu pun cmn stengah jalan🤣", img: "Ctk15.jpg" },
+                { title: "Anggun & Mempesona 16", desc: "Pulang dari pa Nurul p rumah ini, syang masih inga?", img: "Ctk16.jpg" },
+                { title: "Anggun & Mempesona 17", desc: "gaya slay andalan, mar cantik sih...💅", img: "Ctk17.jpg" },
+                { title: "Anggun & Mempesona 18", desc: "yang Bunga yang mana sih?", img: "Ctk18.jpg" },
+                { title: "Anggun & Mempesona 19", desc: "pertama kali ke tumpa, dan kayaknya jdi yang terkhir😭🤣", img: "Ctk19.jpg" },
+                { title: "Anggun & Mempesona 20", desc: "ijo versi berisi?😭", img: "Ctk20.jpg" },
+                { title: "Anggun & Mempesona 21", desc: "menyatu dgn bambu yang di blkang🎍", img: "Ctk21.jpg" },
+                { title: "Anggun & Mempesona 22", desc: "mirip di bali kang yang?", img: "Ctk22.jpg" },
+                { title: "Anggun & Mempesona 23", desc: "17 Agustus laeng sibuk mandi trg sibuk ba foto📸", img: "Ctk23.jpg" },
+                { title: "Anggun & Mempesona 24", desc: "foto yang menurut sayang bsae, mnrt kta gaga. hosa kuda leh da ka atas sini😩", img: "Ctk24.jpg" },
+                { title: "Anggun & Mempesona 25", desc: "ini leh gaga biar silau", img: "Ctk25.jpg" },
+                { title: "Anggun & Mempesona 26", desc: "kapan kapan ksini ulang, kapan e?🥳", img: "Ctk26.jpg" },
+                { title: "Anggun & Mempesona 27", desc: "sma cantik dgn Bunga🪻🌼", img: "Ctk27.jpg" },
+                { title: "Anggun & Mempesona 28", desc: "da kluar dgn spa do?", img: "Ctk28.jpg" },
+                { title: "Anggun & Mempesona 29", desc: "doh msih skolah² stw ini", img: "Ctk29.jpg" },
+                { title: "Anggun & Mempesona 30", desc: "jgn lupa ba make up", img: "Ctk30.jpg" },
+            ],
+            keluarga: [
+                { title: "Orang Terdekat 1", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg1.jpg" },
+                { title: "Orang Terdekat 2", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg2.jpg" },
+                { title: "Orang Terdekat 3", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg3.jpg" },
+                { title: "Orang Terdekat 4", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg4.jpg" },
+                { title: "Orang Terdekat 5", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg5.jpg" },
+                { title: "Orang Terdekat 6", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg6.jpg" },
+                { title: "Orang Terdekat 7", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg7.jpg" },
+                { title: "Orang Terdekat 8", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg8.jpg" },
+                { title: "Orang Terdekat 9", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg9.jpg" },
+                { title: "Orang Terdekat 10", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg10.jpg" },
+                { title: "Orang Terdekat 11", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg11.jpg" },
+                { title: "Orang Terdekat 12", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg12.jpg" },
+                { title: "Orang Terdekat 13", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg13.jpg" },
+                { title: "Orang Terdekat 14", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg14.jpg" },
+                { title: "Orang Terdekat 15", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg15.jpg" },
+                { title: "Orang Terdekat 16", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg16.jpg" },
+                { title: "Orang Terdekat 17", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg17.jpg" },
+                { title: "Orang Terdekat 18", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg18.jpg" },
+                { title: "Orang Terdekat 19", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg19.jpg" },
+                { title: "Orang Terdekat 20", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg20.jpg" },
+                { title: "Orang Terdekat 21", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg21.jpg" },
+                { title: "Orang Terdekat 22", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg22.jpg" },
+                { title: "Orang Terdekat 23", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg23.jpg" },
+                { title: "Orang Terdekat 24", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg24.jpg" },
+                { title: "Orang Terdekat 25", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg25.jpg" },
+                { title: "Orang Terdekat 26", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg26.jpg" },
+                { title: "Orang Terdekat 27", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg27.jpg" },
+                { title: "Orang Terdekat 28", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg28.jpg" },
+                { title: "Orang Terdekat 29", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg29.jpg" },
+                { title: "Orang Terdekat 30", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg30.jpg" },
+                { title: "Orang Terdekat 31", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg31.jpg" },
+                { title: "Orang Terdekat 32", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg32.jpg" },
+                { title: "Orang Terdekat 33", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg33.jpg" },
+                { title: "Orang Terdekat 34", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg34.jpg" },
+                { title: "Orang Terdekat 35", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg35.jpg" },
+                { title: "Orang Terdekat 36", desc: "Keluarga & Sahabat Tercinta 👨‍👩‍👧‍👦", img: "Klrg36.jpg" }
+            ]
+        };
+
+        const NPOINT_API_URL = "https://api.npoint.io/fafc69b2f61d642be738";
+
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const candleSound = document.getElementById('candle-sound');
+        const hatSound = document.getElementById('hat-sound');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+
+        let wishes = [];
+        let isBarcodeMode = false;
+        let notifIndex = 0;
+
+        function checkMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const splashBarcode = document.getElementById('splash-barcode');
+            const splashNormal = document.getElementById('splash-normal');
+            const commentSection = document.getElementById('comment-section');
+
+            if (urlParams.get('mode') === 'ultah') {
+                isBarcodeMode = true;
+                splashBarcode.classList.remove('hidden');
+                splashBarcode.classList.add('flex');
+                splashNormal.classList.add('hidden'); // Sembunyikan splash topi secara total
+                if(commentSection) commentSection.style.display = 'none';
+            } else {
+                splashNormal.classList.remove('hidden');
+                splashNormal.classList.add('flex');
+                splashBarcode.classList.add('hidden'); // Sembunyikan splash kue secara total
+            }
+        }
+
+        async function fetchOnlineWishes() {
+            try {
+                let response = await fetch(NPOINT_API_URL);
+                if(response.ok) {
+                    let data = await response.json();
+                    if(data && data.wishes) {
+                        wishes = data.wishes;
+                        renderWishes();
+                    }
+                }
+            } catch (e) {
+                wishes = JSON.parse(localStorage.getItem('birthday_wishes_pingkan')) || [
+                    { name: "Sayang ❤️", text: "Selamat ulang tahun yang ke-26 ya cintaku! Semoga bahagia selalu bersama kta 🥰", photo: "IMG_20261007_175525.jpg", pin: "1234" }
+                ];
+                renderWishes();
+            }
+        }
+
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            if(flame) flame.style.display = 'none';
+
+            if(candleSound) {
+                candleSound.currentTime = 0;
+                candleSound.play().catch(e => console.log(e));
+            }
+
+            playMusic();
+            triggerConfetti();
+
+            setTimeout(() => {
+                const splash = document.getElementById('splash-barcode');
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    showMainContent();
+                }, 1000);
+            }, 600);
+        }
+
+        function enterFromHat() {
+            if (hatSound) {
+                hatSound.pause();
+                hatSound.currentTime = 0;
+                var hatPromise = hatSound.play();
+                if (hatPromise !== undefined) {
+                    hatPromise.catch(function(e) {
+                        console.log("Audio play blocked/error:", e);
+                    });
+                }
+            }
+
+            playMusic();
+            triggerConfetti();
+
+            const splash = document.getElementById('splash-normal');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                showMainContent();
+            }, 1000);
+        }
+
+        function showMainContent() {
+            const main = document.getElementById('main-content');
+            main.classList.remove('opacity-0', 'pointer-events-none');
+            fetchOnlineWishes();
+            startNotifLoop();
+        }
+
+        function playMusic() {
+            if(bgMusic) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    if(musicIcon) musicIcon.className = 'fa-solid fa-pause';
+                    if(musicText) musicText.innerText = 'Jeda Musik';
+                }).catch(e => console.log("Autoplay error"));
+            }
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff69b4', '#ff1493', '#ffc0cb', '#ffffff', '#ffd700']
+            });
+        }
+
+        function readFileAsBase64(file) {
+            return new Promise((resolve) => {
+                if(!file) return resolve(null);
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function submitWish(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('sender-name');
+            const messageInput = document.getElementById('sender-message');
+            const photoInput = document.getElementById('sender-photo');
+            const pinInput = document.getElementById('sender-pin');
+            const submitBtn = document.getElementById('submit-btn');
+
+            const name = nameInput.value.trim();
+            const text = messageInput.value.trim();
+            const pin = pinInput.value.trim();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Mengirim Online...</span>';
+
+            let userPhoto = null;
+            if (photoInput.files && photoInput.files[0]) {
+                userPhoto = await readFileAsBase64(photoInput.files[0]);
+            }
+
+            if (!userPhoto) {
+                const defaultPhotos = galleryData.pacar.concat(galleryData.cantik);
+                userPhoto = defaultPhotos[Math.floor(Math.random() * defaultPhotos.length)].img;
+            }
+
+            const newWish = { name, text, photo: userPhoto, pin: pin };
+            wishes.unshift(newWish);
+
+            try {
+                let response = await fetch(NPOINT_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ wishes: wishes })
+                });
+
+                if(!response.ok) throw new Error("Gagal menyimpan");
+            } catch (e) {
+                localStorage.setItem('birthday_wishes_pingkan', JSON.stringify(wishes));
+            }
+
+            nameInput.value = '';
+            messageInput.value = '';
+            photoInput.value = '';
+            pinInput.value = '';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>Kirim Ucapan Online 💌</span>';
+
+            renderWishes();
+            showNotificationPopUp(name, text, userPhoto);
+            triggerConfetti();
+        }
+
+        async function deleteWish(index) {
+            const inputPin = prompt("Masukkan PIN Rahasia 4 angka yang kamu buat saat mengirim ucapan:");
+            if (inputPin === null) return;
+
+            if (inputPin === wishes[index].pin || inputPin === "0000") {
+                if (confirm("Apakah kamu yakin ingin menghapus ucapan ini?")) {
+                    wishes.splice(index, 1);
+                    try {
+                        await fetch(NPOINT_API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ wishes: wishes })
+                        });
+                    } catch (e) {
+                        localStorage.setItem('birthday_wishes_pingkan', JSON.stringify(wishes));
+                    }
+                    renderWishes();
+                    alert("Ucapan berhasil dihapus.");
+                }
+            } else {
+                alert("PIN Salah! Kamu tidak bisa menghapus ucapan orang lain.");
+            }
+        }
+
+        function startNotifLoop() {
+            setInterval(() => {
+                if (wishes && wishes.length > 0) {
+                    const wish = wishes[notifIndex % wishes.length];
+                    showNotificationPopUp(wish.name, wish.text, wish.photo);
+                    notifIndex++;
+                }
+            }, 6000);
+        }
+
+        function showNotificationPopUp(name, text, photo) {
+            const popup = document.getElementById('notification-popup');
+            const notifName = document.getElementById('notif-name');
+            const notifMsg = document.getElementById('notif-message');
+            const notifAvatar = document.getElementById('notif-avatar');
+
+            notifAvatar.src = photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            notifName.innerText = name;
+            notifMsg.innerText = text;
+
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 4000);
+        }
+
+        function renderWishes() {
+            const listEl = document.getElementById('wishes-list');
+            const countEl = document.getElementById('wish-count');
+            if(!listEl) return;
+
+            countEl.innerText = wishes.length;
+            listEl.innerHTML = '';
+
+            wishes.forEach((wish, index) => {
+                const photoSrc = wish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+                const div = document.createElement('div');
+                div.className = 'p-3 bg-pink-50/80 rounded-xl border border-pink-100 text-sm shadow-sm flex items-start space-x-3 relative group';
+                
+                div.innerHTML = `
+                    <img src="${photoSrc}" class="w-9 h-9 rounded-full object-cover shrink-0 border border-pink-300 mt-0.5" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-bold text-pink-600 mb-0.5 text-xs flex items-center">
+                            <i class="fa-solid fa-heart text-[10px] mr-1"></i> ${escapeHtml(wish.name)}
+                        </div>
+                        <p class="text-gray-700 text-xs leading-relaxed break-words">${escapeHtml(wish.text)}</p>
+                    </div>
+                    <button onclick="deleteWish(${index})" class="text-gray-400 hover:text-red-500 text-xs p-1 transition shrink-0" title="Hapus Ucapan">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                listEl.appendChild(div);
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        function openGallery(category) {
+            const modal = document.getElementById('gallery-modal');
+            const titleEl = document.getElementById('modal-title');
+            const badgeEl = document.getElementById('modal-category-badge');
+            const gridEl = document.getElementById('gallery-grid');
+
+            const titles = {
+                pacar: "Koleksi Bersama Pacar ❤️",
+                lucu: "Koleksi Momen Lucu 😄",
+                cantik: "Koleksi Potret Cantik 👑",
+                keluarga: "Koleksi Orang Terdekat 👨‍👩‍👧‍👦"
+            };
+
+            titleEl.innerText = titles[category];
+            badgeEl.innerText = category.toUpperCase();
+
+            gridEl.innerHTML = '';
+            galleryData[category].forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'polaroid-frame rounded-2xl flex flex-col items-center cursor-pointer transform hover:scale-105 transition';
+                card.onclick = () => triggerConfetti();
+                
+                card.innerHTML = `
+                    <div class="w-full aspect-square overflow-hidden rounded-xl mb-3 bg-pink-50 relative flex items-center justify-center">
+                        <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/ffb6c1/ffffff?text=Foto+Gagal+Dimuat';">
+                    </div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1">${item.title}</h4>
+                    <p class="text-xs text-gray-500 text-center font-light">${item.desc}</p>
+                `;
+                gridEl.appendChild(card);
+            });
+
+            modal.classList.remove('hidden');
+            triggerConfetti();
+        }
+
+        function closeGallery() {
+            document.getElementById('gallery-modal').classList.add('hidden');
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.className = 'fa-solid fa-music';
+                musicText.innerText = 'Putar Musik';
+                isPlaying = false;
+            } else {
+                bgMusic.play().catch(e => console.log("Audio error"));
+                musicIcon.className = 'fa-solid fa-pause';
+                musicText.innerText = 'Jeda Musik';
+                isPlaying = true;
+            }
+        }
+
+        function spawnNormalBalloon() {
+            const container = document.getElementById('balloon-container');
+            if (!container) return;
+
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.style.left = (Math.random() * (window.innerWidth - 70) + 10) + 'px';
+            
+            const colors = ['#ff69b4', '#ff1493', '#ffb6c1', '#ff6b81', '#ff9ff3', '#f472b6'];
+            balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            const animDuration = Math.random() * 3 + 6; 
+            balloon.style.animationDuration = animDuration + 's';
+
+            container.appendChild(balloon);
+
+            setTimeout(() => balloon.remove(), animDuration * 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkMode();
+            setInterval(() => spawnNormalBalloon(), 1200);
+        });
+    </script>
+</body>
+</html>
