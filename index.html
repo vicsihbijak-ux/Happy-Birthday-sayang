@@ -119,6 +119,25 @@
             transform: translateY(-5px) rotate(1deg);
             box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
         }
+
+        /* Gaya WhatsApp untuk Komentar Disqus */
+        .wa-chat-box {
+            position: relative;
+            background: #ffffff;
+            border-radius: 18px;
+            border: 2px solid #25D366;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.15);
+        }
+        .wa-chat-bubble-tail {
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-right: 12px solid #25D366;
+            border-bottom: 8px solid transparent;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
@@ -196,7 +215,7 @@
                 <svg width="220" height="220" viewBox="0 0 200 200" class="mx-auto transition-transform duration-300 group-hover:scale-105">
                     <ellipse cx="100" cy="175" rx="80" ry="15" fill="#fbcfe8" />
                     <path d="M 30 140 C 30 120, 170 120, 170 140 L 165 170 C 165 180, 35 180, 35 170 Z" fill="#f472b6" />
-                    <path d="M 30 140 Q 50 155, 70 140 Q 90 155, 110 140 Q 130 155, 150 140 Q 170 155, 170 140 L 170 130 C 170 120, 30 120, 30 130 Z" fill="#ffffff" />
+                    <path d="M 30 140 Q 50 155, 70 140 Q 90 155, 110 140 Q 130 155, 170 140 L 170 130 C 170 120, 30 120, 30 130 Z" fill="#ffffff" />
                     <path d="M 45 110 C 45 95, 155 95, 155 110 L 150 140 C 150 145, 50 145, 50 140 Z" fill="#fb7185" />
                     <path d="M 45 110 Q 65 125, 85 110 Q 105 125, 125 110 Q 145 125, 155 110 L 155 100 C 155 90, 45 90, 45 100 Z" fill="#ffffff" />
                     <rect x="94" y="60" width="12" height="40" fill="#ffffff" rx="3" stroke="#f472b6" stroke-width="2"/>
@@ -290,44 +309,44 @@
             </div>
         </main>
 
-        <!-- AREA UCAPAN & DOA (Hanya Muncul di Mode Link Biasa) -->
+        <!-- AREA KOMENTAR DISQUS GAYA WHATSAPP -->
         <section id="comment-section" class="relative z-10 max-w-2xl mx-auto px-4 my-8 w-full">
             <div class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-2 border-pink-200">
-                <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 mb-2 script-font">Kirim Ucapan & Doa 💌</h3>
-                <p class="text-center text-xs text-gray-500 mb-6">Tulis ucapanmu di sini, pesannya akan tersinkron secara online dan muncul sebagai notifikasi pop-up di layar!</p>
+                <div class="flex items-center justify-center space-x-2 mb-2">
+                    <i class="fa-brands fa-whatsapp text-green-500 text-2xl"></i>
+                    <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 script-font">Kirim Ucapan & Doa 💌</h3>
+                </div>
+                <p class="text-center text-xs text-gray-500 mb-6">Tulis ucapan serta kirim foto di kolom komentar WhatsApp Style berbasis Disqus!</p>
                 
-                <form id="wish-form" onsubmit="submitWish(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Kamu:</label>
-                        <input type="text" id="sender-name" required placeholder="Contoh: Kakak / Sahabat / Teman" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm bg-white/90">
+                <!-- Layout Chat WhatsApp dengan Foto Profil di Samping -->
+                <div class="flex items-start space-x-3 my-4">
+                    <!-- Foto Profil Pengirim di Samping Teks -->
+                    <div class="relative shrink-0">
+                        <img id="disqus-user-avatar" src="IMG_20261007_175525.jpg" alt="Foto Profil" class="w-12 h-12 rounded-full object-cover border-2 border-green-500 shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
+                        <div class="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-white">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Foto Profil Kamu (Opsional):</label>
-                        <input type="file" id="sender-photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-pink-100 file:text-pink-700 hover:file:bg-pink-200 cursor-pointer">
-                        <span class="text-[10px] text-gray-400 block mt-1">*Bisa pilih foto selfie dari kamera atau galeri HP</span>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Pesan / Ucapan Ulang Tahun:</label>
-                        <textarea id="sender-message" required rows="3" placeholder="Tulis doa dan ucapan terbaikmu di sini..." class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm bg-white/90"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">PIN Rahasia (4 Angka untuk Hapus Ucapan):</label>
-                        <input type="password" id="sender-pin" required maxlength="4" placeholder="Misal: 1234" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm bg-white/90">
-                    </div>
-                    <button type="submit" id="submit-btn" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 rounded-xl shadow-lg transition duration-300 text-sm flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>Kirim Ucapan Online 💌</span>
-                    </button>
-                </form>
 
-                <!-- Daftar Ucapan Masuk -->
-                <div class="mt-8">
-                    <h4 class="font-bold text-gray-800 text-sm mb-4 flex items-center justify-between">
-                        <span>Daftar Ucapan Online (<span id="wish-count">0</span>)</span>
-                        <span class="text-xs text-pink-500 font-normal">Sinkronisasi Real-time</span>
-                    </h4>
-                    <div id="wishes-list" class="space-y-3 max-h-80 overflow-y-auto pr-2">
-                        <!-- Rendered dynamically -->
+                    <!-- Bubble Chat WhatsApp Berisi Disqus -->
+                    <div class="flex-1 wa-chat-box p-4 relative">
+                        <div class="wa-chat-bubble-tail"></div>
+                        
+                        <!-- Form Kompresi Foto Opsional -->
+                        <div class="mb-4 bg-green-50/80 p-3 rounded-xl border border-green-200 text-xs">
+                            <label class="block font-semibold text-green-800 mb-1">
+                                <i class="fa-solid fa-image mr-1"></i> Kompres & Kecilkan Foto Sebelum Diunggah:
+                            </label>
+                            <input type="file" id="compress-photo-input" accept="image/*" onchange="compressPhotoForDisqus(this)" class="w-full text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700 cursor-pointer">
+                            <span class="text-[10px] text-gray-500 block mt-1">*Foto dikompresi maksimal agar memuat sangat ringan di Disqus.</span>
+                            <div id="compressed-preview-container" class="hidden mt-2 flex items-center space-x-2">
+                                <img id="compressed-preview" src="" class="w-12 h-12 rounded border border-green-400 object-cover">
+                                <span class="text-[10px] text-green-700 font-medium">Foto siap disalin/diunggah ke Disqus!</span>
+                            </div>
+                        </div>
+
+                        <!-- Embed Disqus -->
+                        <div id="disqus_thread"></div>
                     </div>
                 </div>
             </div>
@@ -495,8 +514,6 @@
             ]
         };
 
-        const NPOINT_API_URL = "https://api.npoint.io/fafc69b2f61d642be738";
-
         let isPlaying = false;
         const bgMusic = document.getElementById('bg-music');
         const candleSound = document.getElementById('candle-sound');
@@ -504,10 +521,15 @@
         const musicIcon = document.getElementById('music-icon');
         const musicText = document.getElementById('music-text');
 
-        let wishes = [];
         let isBarcodeMode = false;
         let notifIndex = 0;
         let currentActiveWish = null;
+
+        // Data bawaan ucapan untuk Notifikasi Pop-up
+        const defaultWishes = [
+            { name: "Sayang ❤️", text: "Selamat ulang tahun yang ke-26 ya cintaku! Semoga bahagia selalu bersama kta 🥰", photo: "IMG_20261007_175525.jpg" },
+            { name: "Teman & Keluarga 👨‍👩‍👧‍👦", text: "Panjang umur, sehat selalu, dan berkah melimpah di usia yang baru! ✨", photo: "Klrg1.jpg" }
+        ];
 
         function checkMode() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -525,24 +547,6 @@
                 splashNormal.classList.remove('hidden');
                 splashNormal.classList.add('flex');
                 splashBarcode.classList.add('hidden');
-            }
-        }
-
-        async function fetchOnlineWishes() {
-            try {
-                let response = await fetch(NPOINT_API_URL);
-                if(response.ok) {
-                    let data = await response.json();
-                    if(data && data.wishes) {
-                        wishes = data.wishes;
-                        renderWishes();
-                    }
-                }
-            } catch (e) {
-                wishes = JSON.parse(localStorage.getItem('birthday_wishes_pingkan')) || [
-                    { name: "Sayang ❤️", text: "Selamat ulang tahun yang ke-26 ya cintaku! Semoga bahagia selalu bersama kta 🥰", photo: "IMG_20261007_175525.jpg", pin: "1234" }
-                ];
-                renderWishes();
             }
         }
 
@@ -588,8 +592,8 @@
         function showMainContent() {
             const main = document.getElementById('main-content');
             main.classList.remove('opacity-0', 'pointer-events-none');
-            fetchOnlineWishes();
             startNotifLoop();
+            loadDisqus();
         }
 
         function playMusic() {
@@ -611,123 +615,43 @@
             });
         }
 
-        // Kompres Foto Maksimal agar Sangat Ringan
-        function readFileAsBase64(file) {
-            return new Promise((resolve) => {
-                if(!file) return resolve(null);
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 150; // Lebar foto dibatasi 150px
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
-                        canvas.height = img.height * scaleSize;
+        // Kompres Foto Sangat Ringan Agar Pas untuk Disqus
+        function compressPhotoForDisqus(input) {
+            const file = input.files[0];
+            if (!file) return;
 
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
-                        resolve(compressedBase64);
-                    };
-                    img.onerror = () => resolve(null);
-                    img.src = e.target.result;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 120; // Lebar foto diperkecil ke 120px
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Kompresi kualitas gambar JPEG ke 40%
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.4);
+
+                    document.getElementById('compressed-preview').src = compressedBase64;
+                    document.getElementById('compressed-preview-container').classList.remove('hidden');
+                    
+                    // Update foto profil di samping kolom WhatsApp
+                    document.getElementById('disqus-user-avatar').src = compressedBase64;
                 };
-                reader.onerror = () => resolve(null);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        async function submitWish(event) {
-            event.preventDefault();
-            const nameInput = document.getElementById('sender-name');
-            const messageInput = document.getElementById('sender-message');
-            const photoInput = document.getElementById('sender-photo');
-            const pinInput = document.getElementById('sender-pin');
-            const submitBtn = document.getElementById('submit-btn');
-
-            const name = nameInput.value.trim();
-            const text = messageInput.value.trim();
-            const pin = pinInput.value.trim();
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Mengirim Online...</span>';
-
-            let userPhoto = null;
-            if (photoInput.files && photoInput.files[0]) {
-                userPhoto = await readFileAsBase64(photoInput.files[0]);
-            }
-
-            if (!userPhoto) {
-                const defaultPhotos = galleryData.pacar.concat(galleryData.cantik);
-                userPhoto = defaultPhotos[Math.floor(Math.random() * defaultPhotos.length)].img;
-            }
-
-            const newWish = { name, text, photo: userPhoto, pin: pin };
-            const updatedWishes = [newWish, ...wishes];
-
-            try {
-                let response = await fetch(NPOINT_API_URL, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ wishes: updatedWishes })
-                });
-
-                if(!response.ok) throw new Error("Gagal menyimpan ke npoint.io");
-
-                wishes = updatedWishes;
-                alert("Ucapan berhasil terkirim secara online! 💖");
-            } catch (e) {
-                console.error("Error online:", e);
-                alert("Server online sibuk, ucapan disimpan sementara di memori HP ini.");
-                wishes = updatedWishes;
-                localStorage.setItem('birthday_wishes_pingkan', JSON.stringify(wishes));
-            }
-
-            nameInput.value = '';
-            messageInput.value = '';
-            photoInput.value = '';
-            pinInput.value = '';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>Kirim Ucapan Online 💌</span>';
-
-            renderWishes();
-            showNotificationPopUp(newWish);
-            triggerConfetti();
-        }
-
-        async function deleteWish(index) {
-            const inputPin = prompt("Masukkan PIN Rahasia 4 angka yang kamu buat saat mengirim ucapan:");
-            if (inputPin === null) return;
-
-            if (inputPin === wishes[index].pin || inputPin === "0000") {
-                if (confirm("Apakah kamu yakin ingin menghapus ucapan ini?")) {
-                    wishes.splice(index, 1);
-                    try {
-                        await fetch(NPOINT_API_URL, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ wishes: wishes })
-                        });
-                    } catch (e) {
-                        localStorage.setItem('birthday_wishes_pingkan', JSON.stringify(wishes));
-                    }
-                    renderWishes();
-                    alert("Ucapan berhasil dihapus.");
-                }
-            } else {
-                alert("PIN Salah! Kamu tidak bisa menghapus ucapan orang lain.");
-            }
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
 
         function startNotifLoop() {
             setInterval(() => {
-                if (wishes && wishes.length > 0) {
-                    const wish = wishes[notifIndex % wishes.length];
-                    showNotificationPopUp(wish);
-                    notifIndex++;
-                }
+                const wish = defaultWishes[notifIndex % defaultWishes.length];
+                showNotificationPopUp(wish);
+                notifIndex++;
             }, 6000);
         }
 
@@ -738,7 +662,7 @@
             const notifMsg = document.getElementById('notif-message');
             const notifAvatar = document.getElementById('notif-avatar');
 
-            notifAvatar.src = wish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            notifAvatar.src = wish.photo || 'IMG_20261007_175525.jpg';
             notifName.innerText = wish.name;
             notifMsg.innerText = wish.text;
 
@@ -746,11 +670,10 @@
             setTimeout(() => popup.classList.remove('show'), 4000);
         }
 
-        // Buka Pesan Detail Lengkap saat Pop-up Diklik
         function openNotifDetail() {
             if(!currentActiveWish) return;
             
-            document.getElementById('detail-avatar').src = currentActiveWish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            document.getElementById('detail-avatar').src = currentActiveWish.photo || 'IMG_20261007_175525.jpg';
             document.getElementById('detail-name').innerText = currentActiveWish.name;
             document.getElementById('detail-message').innerText = currentActiveWish.text;
 
@@ -760,40 +683,6 @@
 
         function closeNotifDetail() {
             document.getElementById('detail-modal').classList.add('hidden');
-        }
-
-        function renderWishes() {
-            const listEl = document.getElementById('wishes-list');
-            const countEl = document.getElementById('wish-count');
-            if(!listEl) return;
-
-            countEl.innerText = wishes.length;
-            listEl.innerHTML = '';
-
-            wishes.forEach((wish, index) => {
-                const photoSrc = wish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
-                const div = document.createElement('div');
-                div.className = 'p-3 bg-pink-50/80 rounded-xl border border-pink-100 text-sm shadow-sm flex items-start space-x-3 relative group';
-                
-                div.innerHTML = `
-                    <img src="${photoSrc}" class="w-9 h-9 rounded-full object-cover shrink-0 border border-pink-300 mt-0.5" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
-                    <div class="flex-1 min-w-0">
-                        <div class="font-bold text-pink-600 mb-0.5 text-xs flex items-center">
-                            <i class="fa-solid fa-heart text-[10px] mr-1"></i> ${escapeHtml(wish.name)}
-                        </div>
-                        <p class="text-gray-700 text-xs leading-relaxed break-words">${escapeHtml(wish.text)}</p>
-                    </div>
-                    <button onclick="deleteWish(${index})" class="text-gray-400 hover:text-red-500 text-xs p-1 transition shrink-0" title="Hapus Ucapan">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                `;
-                listEl.appendChild(div);
-            });
-        }
-
-        function escapeHtml(text) {
-            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
 
         function openGallery(category) {
@@ -867,6 +756,15 @@
             container.appendChild(balloon);
 
             setTimeout(() => balloon.remove(), animDuration * 1000);
+        }
+
+        // Integrasi Skrip Disqus
+        function loadDisqus() {
+            var d = document, s = d.createElement('script');
+            // Ganti 'shortname-kamu' dengan shortname Disqus milikmu
+            s.src = 'https://shortname-kamu.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
