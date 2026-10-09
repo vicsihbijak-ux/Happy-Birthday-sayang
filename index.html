@@ -25,7 +25,7 @@
         .polaroid-frame { background: white; padding: 12px 12px 35px 12px; box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2); transition: all 0.3s ease; }
         .polaroid-frame:hover { transform: translateY(-5px) rotate(1deg); box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4); }
 
-        /* Animasi Pop-up Notifikasi WhatsApp Mengambang & Otomatis Membesar */
+        /* Animasi Notifikasi WhatsApp untuk Mode Barcode */
         @keyframes popIn {
             0% { transform: translate(-50%, -20px) scale(0.9); opacity: 0; }
             100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
@@ -46,7 +46,7 @@
     <audio id="candle-sound"><source src="Trumpet.mp3" type="audio/mpeg"></audio>
     <audio id="hat-sound"><source src="yeay.mp3" type="audio/mpeg"></audio>
 
-    <!-- Notifikasi WhatsApp Mengambang untuk Mode Barcode (Bisa Membesar & Bergantian) -->
+    <!-- Notifikasi WhatsApp Mengambang Khusus Mode Barcode -->
     <div id="wa-notification" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm bg-slate-900/95 text-white backdrop-blur-md rounded-2xl p-3.5 shadow-2xl border border-emerald-500/30 hidden">
         <div class="flex items-start space-x-3">
             <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shrink-0 mt-0.5 shadow-lg">
@@ -57,7 +57,6 @@
                     <span id="wa-author" class="text-xs font-bold text-emerald-400 truncate"></span>
                     <span id="wa-date" class="text-[10px] text-gray-400 shrink-0 ml-2"></span>
                 </div>
-                <!-- Pesan otomatis membesar sesuai panjang teks -->
                 <p id="wa-text" class="text-xs text-gray-100 whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto pr-1"></p>
                 <div id="wa-photo-container" class="mt-2 hidden">
                     <img id="wa-photo" src="" class="rounded-xl max-h-36 object-cover border border-white/20">
@@ -198,34 +197,29 @@
     </div>
 
     <script>
-        // Database Cloud Gratis Tahan Lama (KV-Store Online)
-        const DB_KEY = "pingkan_ultah_comments_26";
-        const CLOUD_DB_URL = `https://kvdb.io/2qL89K9M9S2N5W89L9P926/${DB_KEY}`;
+        // TEMPELKAN URL GOOGLE APPS SCRIPT DARI SPREADSHEET KAMU DI SINI
+        const GOOGLE_SCRIPT_URL = "TEMPEL_URL_GOOGLE_APPS_SCRIPT_KAMU_DI_SINI";
 
         let isBarcodeMode = false;
-        let commentLoopIndex = 0;
         let globalComments = [];
+        let commentLoopIndex = 0;
         let loopTimer = null;
 
         async function fetchComments() {
             try {
-                const res = await fetch(CLOUD_DB_URL);
+                const res = await fetch(GOOGLE_SCRIPT_URL);
                 if (res.ok) {
                     globalComments = await res.json();
-                } else {
-                    globalComments = JSON.parse(localStorage.getItem('online_comments') || '[]');
                 }
             } catch (e) {
                 globalComments = JSON.parse(localStorage.getItem('online_comments') || '[]');
             }
 
             if (isBarcodeMode) {
-                // Mode Barcode: Putar notifikasi WhatsApp bergantian terus-menerus
-                if (globalComments.length > 0) {
-                    startNotificationLoop();
-                }
+                // Mode Barcode: Putar notifikasi WhatsApp terus-menerus
+                if (globalComments.length > 0) startNotificationLoop();
             } else {
-                // Mode Link Biasa: Render tampilan komentar lengkap di bawah
+                // Mode Link Biasa: Render daftar komentar di bagian bawah
                 renderComments(globalComments);
             }
         }
@@ -270,30 +264,21 @@
                 date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })
             };
 
-            let currentList = [];
+            // Kirim data ke Google Sheets secara online
             try {
-                const res = await fetch(CLOUD_DB_URL);
-                if (res.ok) currentList = await res.json();
-            } catch (err) {}
-
-            currentList.unshift(newComment);
-
-            // Simpan ke database online cloud gratis
-            try {
-                await fetch(CLOUD_DB_URL, {
+                await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(currentList)
+                    body: JSON.stringify(newComment)
                 });
             } catch (err) {}
 
-            localStorage.setItem('online_comments', JSON.stringify(currentList));
-            globalComments = currentList;
-            renderComments(currentList);
+            globalComments.unshift(newComment);
+            localStorage.setItem('online_comments', JSON.stringify(globalComments));
+            renderComments(globalComments);
 
             nameInput.value = '';
             msgInput.value = '';
-            photoInput.value = '';
+            if (photoInput) photoInput.value = '';
             btnText.innerText = "Kirim Ucapan";
             triggerConfetti();
         }
@@ -301,7 +286,7 @@
         function startNotificationLoop() {
             if (loopTimer) clearInterval(loopTimer);
             showNextNotification();
-            // Berpindah komentar setiap 6 detik secara terus-menerus
+            // Berpindah ucapan setiap 6 detik
             loopTimer = setInterval(showNextNotification, 6000);
         }
 
@@ -318,7 +303,6 @@
 
             if (!waNotify) return;
 
-            // Animasi menghilang sebelum ganti ke komentar berikutnya
             waNotify.classList.remove('wa-pop-in');
             waNotify.classList.add('wa-pop-out');
 
@@ -376,7 +360,7 @@
                 document.getElementById('splash-barcode').classList.remove('hidden');
                 document.getElementById('splash-barcode').classList.add('flex');
                 
-                // Khusus Barcode: Sembunyikan Form/Seksi Komen sepenuhnya
+                // Khusus Barcode: Sembunyikan Form Komentar sepenuhnya
                 const commentSec = document.getElementById('comment-section');
                 if(commentSec) commentSec.style.display = 'none';
             } else {
