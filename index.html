@@ -123,22 +123,50 @@
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
     
-    <!-- NOTIFIKASI POP-UP ALA WHATSAPP -->
-    <div id="notification-popup">
-        <div class="bg-white/95 backdrop-blur-md border border-gray-200 p-3.5 rounded-2xl shadow-2xl flex items-center space-x-3.5">
+    <!-- NOTIFIKASI POP-UP ALA WHATSAPP (BISA DIKLIK) -->
+    <div id="notification-popup" onclick="openNotifDetail()" class="cursor-pointer active:scale-95 transition-transform">
+        <div class="bg-white/95 backdrop-blur-md border-2 border-pink-300 p-3.5 rounded-2xl shadow-2xl flex items-center space-x-3.5 relative">
             <div class="relative shrink-0">
                 <img id="notif-avatar" src="IMG_20261007_175525.jpg" alt="Foto Profil" class="w-12 h-12 rounded-full object-cover border-2 border-pink-400 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
                 <div class="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-white">
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
             </div>
-            <div class="flex-1 min-w-0">
+            <div class="flex-1 min-w-0 pr-4">
                 <div class="flex justify-between items-center mb-0.5">
                     <h5 id="notif-name" class="font-bold text-gray-900 text-sm truncate">Nama Pengirim</h5>
                     <span class="text-[10px] text-gray-400 shrink-0 ml-2">Baru saja</span>
                 </div>
                 <p id="notif-message" class="text-xs text-gray-600 truncate leading-snug">Isi pesan ucapan akan muncul di sini...</p>
             </div>
+            <div class="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 text-xs animate-pulse">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL BACA UCAPAN LENGKAP -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border-4 border-pink-300 text-center animate-float">
+            <button onclick="closeNotifDetail()" class="absolute top-4 right-4 bg-pink-100 hover:bg-pink-500 hover:text-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex flex-col items-center mb-4">
+                <img id="detail-avatar" src="" class="w-20 h-20 rounded-full object-cover border-4 border-pink-400 shadow-lg mb-3">
+                <h4 id="detail-name" class="font-bold text-lg text-gray-800">Nama Pengirim</h4>
+                <span class="text-xs text-pink-500 bg-pink-50 px-3 py-1 rounded-full font-medium mt-1">
+                    <i class="fa-solid fa-envelope mr-1"></i> Ucapan Spesial
+                </span>
+            </div>
+
+            <div class="bg-pink-50/70 p-4 rounded-2xl border border-pink-100 text-left max-h-60 overflow-y-auto my-4">
+                <p id="detail-message" class="text-xs md:text-sm text-gray-700 leading-relaxed whitespace-pre-line break-words"></p>
+            </div>
+
+            <button onclick="closeNotifDetail()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2.5 rounded-xl shadow transition text-xs">
+                Tutup Pesan 💖
+            </button>
         </div>
     </div>
 
@@ -146,14 +174,14 @@
     <div class="balloon-container" id="balloon-container"></div>   
 
     <!-- AUDIO BACKGROUND & SOUND EFFECT ELEMENT -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="from eden - hozier (sped up) [kt2QgrnW6uo].mp3" type="audio/mpeg">
+    <audio id="bg-music" loop>
+        <source src="from eden - hozier (sped up) [kt2QgrnW6uo].mp3" type="audio/ogg">
     </audio>
-    <audio id="candle-sound" preload="auto">
+    <audio id="candle-sound">
         <source src="Trumpet.mp3" type="audio/mpeg">
     </audio>
-    <audio id="hat-sound" preload="auto">
-        <source src="yeay.mp3" type="audio/mpeg">
+    <audio id="hat-sound">
+        <source src="namatargetsuarakamu.mp3" type="audio/mpeg">
     </audio>
 
     <!-- SPLASH SCREEN 1: KUE & LILIN (Khusus Mode Barcode) -->
@@ -479,6 +507,7 @@
         let wishes = [];
         let isBarcodeMode = false;
         let notifIndex = 0;
+        let currentActiveWish = null;
 
         function checkMode() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -490,12 +519,12 @@
                 isBarcodeMode = true;
                 splashBarcode.classList.remove('hidden');
                 splashBarcode.classList.add('flex');
-                splashNormal.classList.add('hidden'); // Sembunyikan splash topi secara total
+                splashNormal.classList.add('hidden');
                 if(commentSection) commentSection.style.display = 'none';
             } else {
                 splashNormal.classList.remove('hidden');
                 splashNormal.classList.add('flex');
-                splashBarcode.classList.add('hidden'); // Sembunyikan splash kue secara total
+                splashBarcode.classList.add('hidden');
             }
         }
 
@@ -541,14 +570,8 @@
 
         function enterFromHat() {
             if (hatSound) {
-                hatSound.pause();
                 hatSound.currentTime = 0;
-                var hatPromise = hatSound.play();
-                if (hatPromise !== undefined) {
-                    hatPromise.catch(function(e) {
-                        console.log("Audio play blocked/error:", e);
-                    });
-                }
+                hatSound.play().catch(e => console.log("Sound topi belum dimasukkan / error:", e));
             }
 
             playMusic();
@@ -588,11 +611,29 @@
             });
         }
 
+        // Kompres Foto Maksimal agar Sangat Ringan
         function readFileAsBase64(file) {
             return new Promise((resolve) => {
                 if(!file) return resolve(null);
                 const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 150; // Lebar foto dibatasi 150px
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scaleSize;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
+                        resolve(compressedBase64);
+                    };
+                    img.onerror = () => resolve(null);
+                    img.src = e.target.result;
+                };
                 reader.onerror = () => resolve(null);
                 reader.readAsDataURL(file);
             });
@@ -624,17 +665,23 @@
             }
 
             const newWish = { name, text, photo: userPhoto, pin: pin };
-            wishes.unshift(newWish);
+            const updatedWishes = [newWish, ...wishes];
 
             try {
                 let response = await fetch(NPOINT_API_URL, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ wishes: wishes })
+                    body: JSON.stringify({ wishes: updatedWishes })
                 });
 
-                if(!response.ok) throw new Error("Gagal menyimpan");
+                if(!response.ok) throw new Error("Gagal menyimpan ke npoint.io");
+
+                wishes = updatedWishes;
+                alert("Ucapan berhasil terkirim secara online! 💖");
             } catch (e) {
+                console.error("Error online:", e);
+                alert("Server online sibuk, ucapan disimpan sementara di memori HP ini.");
+                wishes = updatedWishes;
                 localStorage.setItem('birthday_wishes_pingkan', JSON.stringify(wishes));
             }
 
@@ -646,7 +693,7 @@
             submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>Kirim Ucapan Online 💌</span>';
 
             renderWishes();
-            showNotificationPopUp(name, text, userPhoto);
+            showNotificationPopUp(newWish);
             triggerConfetti();
         }
 
@@ -659,7 +706,7 @@
                     wishes.splice(index, 1);
                     try {
                         await fetch(NPOINT_API_URL, {
-                            method: 'POST',
+                            method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ wishes: wishes })
                         });
@@ -678,24 +725,41 @@
             setInterval(() => {
                 if (wishes && wishes.length > 0) {
                     const wish = wishes[notifIndex % wishes.length];
-                    showNotificationPopUp(wish.name, wish.text, wish.photo);
+                    showNotificationPopUp(wish);
                     notifIndex++;
                 }
             }, 6000);
         }
 
-        function showNotificationPopUp(name, text, photo) {
+        function showNotificationPopUp(wish) {
+            currentActiveWish = wish;
             const popup = document.getElementById('notification-popup');
             const notifName = document.getElementById('notif-name');
             const notifMsg = document.getElementById('notif-message');
             const notifAvatar = document.getElementById('notif-avatar');
 
-            notifAvatar.src = photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
-            notifName.innerText = name;
-            notifMsg.innerText = text;
+            notifAvatar.src = wish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            notifName.innerText = wish.name;
+            notifMsg.innerText = wish.text;
 
             popup.classList.add('show');
             setTimeout(() => popup.classList.remove('show'), 4000);
+        }
+
+        // Buka Pesan Detail Lengkap saat Pop-up Diklik
+        function openNotifDetail() {
+            if(!currentActiveWish) return;
+            
+            document.getElementById('detail-avatar').src = currentActiveWish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            document.getElementById('detail-name').innerText = currentActiveWish.name;
+            document.getElementById('detail-message').innerText = currentActiveWish.text;
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+            triggerConfetti();
+        }
+
+        function closeNotifDetail() {
+            document.getElementById('detail-modal').classList.add('hidden');
         }
 
         function renderWishes() {
