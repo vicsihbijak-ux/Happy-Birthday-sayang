@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Ulang Tahun ke-26, Oktovina Pingkan Elisabet Nasarudin! 💖</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Poppins & Dancing Script -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Confetti JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -66,20 +62,6 @@
             }
         }
 
-        #notification-popup {
-            position: fixed;
-            top: -150px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 92%;
-            max-width: 420px;
-        }
-        #notification-popup.show {
-            top: 16px;
-        }
-
         .script-font {
             font-family: 'Dancing Script', cursive;
         }
@@ -119,80 +101,12 @@
             transform: translateY(-5px) rotate(1deg);
             box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
         }
-
-        /* Gaya WhatsApp untuk Komentar Disqus */
-        .wa-chat-box {
-            position: relative;
-            background: #ffffff;
-            border-radius: 18px;
-            border: 2px solid #25D366;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.15);
-        }
-        .wa-chat-bubble-tail {
-            position: absolute;
-            left: -10px;
-            top: 20px;
-            width: 0;
-            height: 0;
-            border-top: 8px solid transparent;
-            border-right: 12px solid #25D366;
-            border-bottom: 8px solid transparent;
-        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
-    
-    <!-- NOTIFIKASI POP-UP ALA WHATSAPP (BISA DIKLIK) -->
-    <div id="notification-popup" onclick="openNotifDetail()" class="cursor-pointer active:scale-95 transition-transform">
-        <div class="bg-white/95 backdrop-blur-md border-2 border-pink-300 p-3.5 rounded-2xl shadow-2xl flex items-center space-x-3.5 relative">
-            <div class="relative shrink-0">
-                <img id="notif-avatar" src="IMG_20261007_175525.jpg" alt="Foto Profil" class="w-12 h-12 rounded-full object-cover border-2 border-pink-400 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
-                <div class="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-white">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </div>
-            </div>
-            <div class="flex-1 min-w-0 pr-4">
-                <div class="flex justify-between items-center mb-0.5">
-                    <h5 id="notif-name" class="font-bold text-gray-900 text-sm truncate">Nama Pengirim</h5>
-                    <span class="text-[10px] text-gray-400 shrink-0 ml-2">Baru saja</span>
-                </div>
-                <p id="notif-message" class="text-xs text-gray-600 truncate leading-snug">Isi pesan ucapan akan muncul di sini...</p>
-            </div>
-            <div class="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 text-xs animate-pulse">
-                <i class="fa-solid fa-chevron-right"></i>
-            </div>
-        </div>
-    </div>
 
-    <!-- MODAL BACA UCAPAN LENGKAP -->
-    <div id="detail-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border-4 border-pink-300 text-center animate-float">
-            <button onclick="closeNotifDetail()" class="absolute top-4 right-4 bg-pink-100 hover:bg-pink-500 hover:text-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <div class="flex flex-col items-center mb-4">
-                <img id="detail-avatar" src="" class="w-20 h-20 rounded-full object-cover border-4 border-pink-400 shadow-lg mb-3">
-                <h4 id="detail-name" class="font-bold text-lg text-gray-800">Nama Pengirim</h4>
-                <span class="text-xs text-pink-500 bg-pink-50 px-3 py-1 rounded-full font-medium mt-1">
-                    <i class="fa-solid fa-envelope mr-1"></i> Ucapan Spesial
-                </span>
-            </div>
-
-            <div class="bg-pink-50/70 p-4 rounded-2xl border border-pink-100 text-left max-h-60 overflow-y-auto my-4">
-                <p id="detail-message" class="text-xs md:text-sm text-gray-700 leading-relaxed whitespace-pre-line break-words"></p>
-            </div>
-
-            <button onclick="closeNotifDetail()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2.5 rounded-xl shadow transition text-xs">
-                Tutup Pesan 💖
-            </button>
-        </div>
-    </div>
-
-    <!-- WADAH BALON BIASA DI DEPAN -->
     <div class="balloon-container" id="balloon-container"></div>   
 
-    <!-- AUDIO BACKGROUND & SOUND EFFECT ELEMENT -->
     <audio id="bg-music" loop>
         <source src="from eden - hozier (sped up) [kt2QgrnW6uo].mp3" type="audio/ogg">
     </audio>
@@ -203,7 +117,6 @@
         <source src="yeay.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- SPLASH SCREEN 1: KUE & LILIN (Khusus Mode Barcode) -->
     <div id="splash-barcode" class="fixed inset-0 z-50 bg-slate-950 hidden flex-col items-center justify-center text-center px-4 transition-opacity duration-1000">
         <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ff69b4_1px,transparent_1px)] [background-size:24px_24px]"></div>
         
@@ -215,7 +128,7 @@
                 <svg width="220" height="220" viewBox="0 0 200 200" class="mx-auto transition-transform duration-300 group-hover:scale-105">
                     <ellipse cx="100" cy="175" rx="80" ry="15" fill="#fbcfe8" />
                     <path d="M 30 140 C 30 120, 170 120, 170 140 L 165 170 C 165 180, 35 180, 35 170 Z" fill="#f472b6" />
-                    <path d="M 30 140 Q 50 155, 70 140 Q 90 155, 110 140 Q 130 155, 170 140 L 170 130 C 170 120, 30 120, 30 130 Z" fill="#ffffff" />
+                    <path d="M 30 140 Q 50 155, 70 140 Q 90 155, 110 140 Q 130 155, 150 140 Q 170 155, 170 140 L 170 130 C 170 120, 30 120, 30 130 Z" fill="#ffffff" />
                     <path d="M 45 110 C 45 95, 155 95, 155 110 L 150 140 C 150 145, 50 145, 50 140 Z" fill="#fb7185" />
                     <path d="M 45 110 Q 65 125, 85 110 Q 105 125, 125 110 Q 145 125, 155 110 L 155 100 C 155 90, 45 90, 45 100 Z" fill="#ffffff" />
                     <rect x="94" y="60" width="12" height="40" fill="#ffffff" rx="3" stroke="#f472b6" stroke-width="2"/>
@@ -235,7 +148,6 @@
         </div>
     </div>
 
-    <!-- SPLASH SCREEN 2: TOPI ULANG TAHUN (Khusus Mode Link Biasa) -->
     <div id="splash-normal" class="fixed inset-0 z-50 bg-pink-900/90 backdrop-blur-md hidden flex-col items-center justify-center text-center px-6 transition-opacity duration-1000">
         <div class="max-w-md mx-auto text-white flex flex-col items-center">
             <h2 class="text-xl md:text-2xl font-light tracking-wide mb-2">Selamat Datang di Project Ucapan</h2>
@@ -251,7 +163,6 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div id="main-content" class="opacity-0 pointer-events-none transition-opacity duration-1000 min-h-screen flex flex-col justify-between pb-12">
         
         <div class="absolute top-0 left-0 w-full overflow-hidden pointer-events-none z-0">
@@ -259,7 +170,6 @@
             <div class="absolute top-40 -right-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float" style="animation-delay: 1s;"></div>
         </div>
 
-        <!-- Header / Manual Music Toggle Button -->
         <header class="relative z-10 w-full max-w-4xl mx-auto p-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <span class="bg-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">✨ 26th Birthday</span>
@@ -270,7 +180,6 @@
             </button>
         </header>
 
-        <!-- Hero Greeting Section -->
         <main class="relative z-10 max-w-3xl mx-auto px-4 text-center my-6">
             <div class="glass-card rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden border-2 border-pink-200">
                 <div class="absolute -right-10 -bottom-10 text-pink-100 text-9xl font-bold select-none pointer-events-none">26</div>
@@ -288,7 +197,6 @@
                     Puji Tuhan🥳 Selamat memperingati hari kelahiran yang ke-26 sayang! Semoga di usia yang baru ini, hari-harimu dipenuhi dengan kebahagiaan yang melimpah, senyuman yang tak pernah surut, kesehatan, serta semua impian indahmu satu persatu terwujud💖✨
                 </p>
 
-                <!-- Ayat Alkitab Filipi 4:13 -->
                 <div class="my-6 p-6 bg-pink-50/90 border border-pink-200 rounded-2xl shadow-inner text-center">
                     <div class="text-pink-600 text-sm font-bold tracking-wider uppercase mb-1">
                         <i class="fa-solid fa-book-bible mr-1"></i> Filipi 4:13
@@ -309,55 +217,19 @@
             </div>
         </main>
 
-        <!-- AREA KOMENTAR DISQUS GAYA WHATSAPP -->
         <section id="comment-section" class="relative z-10 max-w-2xl mx-auto px-4 my-8 w-full">
             <div class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-2 border-pink-200">
-                <div class="flex items-center justify-center space-x-2 mb-2">
-                    <i class="fa-brands fa-whatsapp text-green-500 text-2xl"></i>
-                    <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 script-font">Kirim Ucapan & Doa 💌</h3>
-                </div>
-                <p class="text-center text-xs text-gray-500 mb-6">Tulis ucapan serta kirim foto di kolom komentar WhatsApp Style berbasis Disqus!</p>
+                <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 mb-2 script-font">Kirim Ucapan & Doa 💌</h3>
+                <p class="text-center text-xs text-gray-500 mb-6">Tulis ucapan dan melampirkan foto secara online di bawah ini!</p>
                 
-                <!-- Layout Chat WhatsApp dengan Foto Profil di Samping -->
-                <div class="flex items-start space-x-3 my-4">
-                    <!-- Foto Profil Pengirim di Samping Teks -->
-                    <div class="relative shrink-0">
-                        <img id="disqus-user-avatar" src="IMG_20261007_175525.jpg" alt="Foto Profil" class="w-12 h-12 rounded-full object-cover border-2 border-green-500 shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
-                        <div class="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-white">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </div>
-                    </div>
-
-                    <!-- Bubble Chat WhatsApp Berisi Disqus -->
-                    <div class="flex-1 wa-chat-box p-4 relative">
-                        <div class="wa-chat-bubble-tail"></div>
-                        
-                        <!-- Form Kompresi Foto Opsional -->
-                        <div class="mb-4 bg-green-50/80 p-3 rounded-xl border border-green-200 text-xs">
-                            <label class="block font-semibold text-green-800 mb-1">
-                                <i class="fa-solid fa-image mr-1"></i> Kompres & Kecilkan Foto Sebelum Diunggah:
-                            </label>
-                            <input type="file" id="compress-photo-input" accept="image/*" onchange="compressPhotoForDisqus(this)" class="w-full text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700 cursor-pointer">
-                            <span class="text-[10px] text-gray-500 block mt-1">*Foto dikompresi maksimal agar memuat sangat ringan di Disqus.</span>
-                            <div id="compressed-preview-container" class="hidden mt-2 flex items-center space-x-2">
-                                <img id="compressed-preview" src="" class="w-12 h-12 rounded border border-green-400 object-cover">
-                                <span class="text-[10px] text-green-700 font-medium">Foto siap disalin/diunggah ke Disqus!</span>
-                            </div>
-                        </div>
-
-                        <!-- Embed Disqus -->
-                        <div id="disqus_thread"></div>
-                    </div>
-                </div>
+                <div id="disqus_thread"></div>
             </div>
         </section>
 
-        <!-- Gallery Selection Buttons -->
         <section class="relative z-10 max-w-4xl mx-auto px-4 my-8">
             <h3 class="text-center text-xl md:text-2xl font-bold text-gray-800 mb-6 script-font">Pilih Kenangan & Momen Indah 📸</h3>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <!-- Pacar -->
                 <button onclick="openGallery('pacar')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
                     <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
                         <i class="fa-solid fa-heart"></i>
@@ -366,7 +238,6 @@
                     <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Momen Romantis ❤️</span>
                 </button>
 
-                <!-- Lucu -->
                 <button onclick="openGallery('lucu')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
                     <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
                         <i class="fa-solid fa-face-laugh-squint"></i>
@@ -375,7 +246,6 @@
                     <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Gokil & Imut 😄</span>
                 </button>
 
-                <!-- Cantik -->
                 <button onclick="openGallery('cantik')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
                     <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
                         <i class="fa-solid fa-crown"></i>
@@ -384,7 +254,6 @@
                     <span class="text-xs text-gray-400 group-hover:text-pink-100 mt-1">Anggun & Elegan 👑</span>
                 </button>
 
-                <!-- Orang Terdekat -->
                 <button onclick="openGallery('keluarga')" class="group bg-white hover:bg-pink-500 text-gray-800 hover:text-white p-6 rounded-3xl shadow-lg border-2 border-pink-200 transition-all duration-300 flex flex-col items-center justify-center transform hover:-translate-y-2">
                     <div class="w-16 h-16 bg-pink-100 group-hover:bg-white/20 rounded-full flex items-center justify-center text-pink-500 group-hover:text-white mb-3 text-2xl shadow-inner transition">
                         <i class="fa-solid fa-people-group"></i>
@@ -395,7 +264,6 @@
             </div>
         </section>
 
-        <!-- GALLERY MODAL -->
         <div id="gallery-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
             <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl border-4 border-pink-300">
                 <button onclick="closeGallery()" class="absolute top-4 right-4 bg-pink-100 hover:bg-pink-500 hover:text-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow">
@@ -408,8 +276,7 @@
                 </div>
 
                 <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <!-- Dynamic items rendered via script -->
-                </div>
+                    </div>
             </div>
         </div>
 
@@ -521,16 +388,6 @@
         const musicIcon = document.getElementById('music-icon');
         const musicText = document.getElementById('music-text');
 
-        let isBarcodeMode = false;
-        let notifIndex = 0;
-        let currentActiveWish = null;
-
-        // Data bawaan ucapan untuk Notifikasi Pop-up
-        const defaultWishes = [
-            { name: "Sayang ❤️", text: "Selamat ulang tahun yang ke-26 ya cintaku! Semoga bahagia selalu bersama kta 🥰", photo: "IMG_20261007_175525.jpg" },
-            { name: "Teman & Keluarga 👨‍👩‍👧‍👦", text: "Panjang umur, sehat selalu, dan berkah melimpah di usia yang baru! ✨", photo: "Klrg1.jpg" }
-        ];
-
         function checkMode() {
             const urlParams = new URLSearchParams(window.location.search);
             const splashBarcode = document.getElementById('splash-barcode');
@@ -538,7 +395,6 @@
             const commentSection = document.getElementById('comment-section');
 
             if (urlParams.get('mode') === 'ultah') {
-                isBarcodeMode = true;
                 splashBarcode.classList.remove('hidden');
                 splashBarcode.classList.add('flex');
                 splashNormal.classList.add('hidden');
@@ -548,6 +404,20 @@
                 splashNormal.classList.add('flex');
                 splashBarcode.classList.add('hidden');
             }
+        }
+
+        function loadDisqus() {
+            var disqus_config = function () {
+                this.page.url = window.location.href;
+                this.page.identifier = window.location.pathname;
+            };
+            (function() {
+                var d = document, s = d.createElement('script');
+                // PENTING: Ganti 'SHORTNAME-DISQUS-KAMU' di bawah ini dengan shortname Disqus milikmu
+                s.src = 'https://SHORTNAME-DISQUS-KAMU.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
         }
 
         function blowCandle() {
@@ -575,7 +445,7 @@
         function enterFromHat() {
             if (hatSound) {
                 hatSound.currentTime = 0;
-                hatSound.play().catch(e => console.log("Sound topi belum dimasukkan / error:", e));
+                hatSound.play().catch(e => console.log("Sound topi error:", e));
             }
 
             playMusic();
@@ -592,7 +462,6 @@
         function showMainContent() {
             const main = document.getElementById('main-content');
             main.classList.remove('opacity-0', 'pointer-events-none');
-            startNotifLoop();
             loadDisqus();
         }
 
@@ -613,76 +482,6 @@
                 origin: { y: 0.6 },
                 colors: ['#ff69b4', '#ff1493', '#ffc0cb', '#ffffff', '#ffd700']
             });
-        }
-
-        // Kompres Foto Sangat Ringan Agar Pas untuk Disqus
-        function compressPhotoForDisqus(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 120; // Lebar foto diperkecil ke 120px
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                    // Kompresi kualitas gambar JPEG ke 40%
-                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.4);
-
-                    document.getElementById('compressed-preview').src = compressedBase64;
-                    document.getElementById('compressed-preview-container').classList.remove('hidden');
-                    
-                    // Update foto profil di samping kolom WhatsApp
-                    document.getElementById('disqus-user-avatar').src = compressedBase64;
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function startNotifLoop() {
-            setInterval(() => {
-                const wish = defaultWishes[notifIndex % defaultWishes.length];
-                showNotificationPopUp(wish);
-                notifIndex++;
-            }, 6000);
-        }
-
-        function showNotificationPopUp(wish) {
-            currentActiveWish = wish;
-            const popup = document.getElementById('notification-popup');
-            const notifName = document.getElementById('notif-name');
-            const notifMsg = document.getElementById('notif-message');
-            const notifAvatar = document.getElementById('notif-avatar');
-
-            notifAvatar.src = wish.photo || 'IMG_20261007_175525.jpg';
-            notifName.innerText = wish.name;
-            notifMsg.innerText = wish.text;
-
-            popup.classList.add('show');
-            setTimeout(() => popup.classList.remove('show'), 4000);
-        }
-
-        function openNotifDetail() {
-            if(!currentActiveWish) return;
-            
-            document.getElementById('detail-avatar').src = currentActiveWish.photo || 'IMG_20261007_175525.jpg';
-            document.getElementById('detail-name').innerText = currentActiveWish.name;
-            document.getElementById('detail-message').innerText = currentActiveWish.text;
-
-            document.getElementById('detail-modal').classList.remove('hidden');
-            triggerConfetti();
-        }
-
-        function closeNotifDetail() {
-            document.getElementById('detail-modal').classList.add('hidden');
         }
 
         function openGallery(category) {
@@ -756,15 +555,6 @@
             container.appendChild(balloon);
 
             setTimeout(() => balloon.remove(), animDuration * 1000);
-        }
-
-        // Integrasi Skrip Disqus
-        function loadDisqus() {
-            var d = document, s = d.createElement('script');
-            // Ganti 'shortname-kamu' dengan shortname Disqus milikmu
-            s.src = 'https://happy-birthday-sayang.disqus.com/admin/settings/universalcode/';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
