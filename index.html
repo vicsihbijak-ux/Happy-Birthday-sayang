@@ -75,6 +75,7 @@
             transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 92%;
             max-width: 420px;
+            cursor: pointer;
         }
         #notification-popup.show {
             top: 16px;
@@ -123,8 +124,8 @@
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-pink-100 text-gray-800 min-h-screen">
     
-    <!-- NOTIFIKASI POP-UP ALA WHATSAPP -->
-    <div id="notification-popup">
+    <!-- NOTIFIKASI POP-UP ALA WHATSAPP (Bisa diklik untuk melihat teks full & foto) -->
+    <div id="notification-popup" onclick="openFullNotifModal()">
         <div class="bg-white/95 backdrop-blur-md border border-gray-200 p-3.5 rounded-2xl shadow-2xl flex items-center space-x-3.5">
             <div class="relative shrink-0">
                 <img id="notif-avatar" src="IMG_20261007_175525.jpg" alt="Foto Profil" class="w-12 h-12 rounded-full object-cover border-2 border-pink-400 shadow-sm" onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
@@ -138,6 +139,29 @@
                     <span id="notif-date" class="text-[10px] text-gray-400 shrink-0 ml-2">Baru saja</span>
                 </div>
                 <p id="notif-message" class="text-xs text-gray-600 truncate leading-snug">Isi pesan ucapan akan muncul di sini...</p>
+                <span class="text-[10px] text-pink-500 italic font-medium">👆 Sentuh untuk lihat selengkapnya</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DETAIL NOTIFIKASI (Tampil saat notif disentuh) -->
+    <div id="notif-detail-modal" class="fixed inset-0 z-[110] bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl border-4 border-pink-300 text-left">
+            <button onclick="closeFullNotifModal()" class="absolute top-4 right-4 bg-pink-100 hover:bg-pink-500 hover:text-white text-pink-600 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center space-x-3 mb-4">
+                <img id="modal-notif-avatar" src="" class="w-12 h-12 rounded-full object-cover border-2 border-pink-400 shadow-sm" onerror="this.src='https://placehold.co/100x100/ffb6c1/ffffff?text=User';">
+                <div>
+                    <h4 id="modal-notif-name" class="font-bold text-pink-600 text-base">Nama</h4>
+                    <span id="modal-notif-date" class="text-xs text-gray-400">Tanggal</span>
+                </div>
+            </div>
+            <div class="max-h-60 overflow-y-auto mb-4 pr-1">
+                <p id="modal-notif-text" class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap break-words"></p>
+            </div>
+            <div id="modal-notif-photo-wrapper" class="hidden text-center">
+                <img id="modal-notif-photo" src="" class="rounded-2xl max-h-56 mx-auto object-cover border border-pink-200 shadow-md">
             </div>
         </div>
     </div>
@@ -481,6 +505,7 @@
         let wishes = [];
         let isBarcodeMode = false;
         let notifIndex = 0;
+        let currentActiveWish = null;
 
         function checkMode() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -637,7 +662,7 @@
             submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>Kirim Ucapan Online 💌</span>';
 
             renderWishes();
-            showNotificationPopUp(name, message, userPhoto, currentDate);
+            showNotificationPopUp(newWish);
             triggerConfetti();
         }
 
@@ -669,26 +694,51 @@
             setInterval(() => {
                 if (wishes && wishes.length > 0) {
                     const wish = wishes[notifIndex % wishes.length];
-                    showNotificationPopUp(wish.name, wish.message, wish.photo, wish.date);
+                    showNotificationPopUp(wish);
                     notifIndex++;
                 }
             }, 6000);
         }
 
-        function showNotificationPopUp(name, text, photo, date) {
+        function showNotificationPopUp(wish) {
+            currentActiveWish = wish;
             const popup = document.getElementById('notification-popup');
             const notifName = document.getElementById('notif-name');
             const notifMsg = document.getElementById('notif-message');
             const notifDate = document.getElementById('notif-date');
             const notifAvatar = document.getElementById('notif-avatar');
 
-            notifAvatar.src = photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
-            notifName.innerText = name;
-            notifMsg.innerText = text;
-            notifDate.innerText = date || "Baru saja";
+            notifAvatar.src = wish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            notifName.innerText = wish.name;
+            notifMsg.innerText = wish.message;
+            notifDate.innerText = wish.date || "Baru saja";
 
             popup.classList.add('show');
-            setTimeout(() => popup.classList.remove('show'), 4000);
+            setTimeout(() => popup.classList.remove('show'), 4500);
+        }
+
+        function openFullNotifModal() {
+            if (!currentActiveWish) return;
+            const modal = document.getElementById('notif-detail-modal');
+            document.getElementById('modal-notif-avatar').src = currentActiveWish.photo || 'https://placehold.co/100x100/ffb6c1/ffffff?text=User';
+            document.getElementById('modal-notif-name').innerText = currentActiveWish.name;
+            document.getElementById('modal-notif-date').innerText = currentActiveWish.date || "Baru saja";
+            document.getElementById('modal-notif-text').innerText = currentActiveWish.message;
+
+            const photoWrapper = document.getElementById('modal-notif-photo-wrapper');
+            const modalPhoto = document.getElementById('modal-notif-photo');
+            if (currentActiveWish.photo) {
+                modalPhoto.src = currentActiveWish.photo;
+                photoWrapper.classList.remove('hidden');
+            } else {
+                photoWrapper.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeFullNotifModal() {
+            document.getElementById('notif-detail-modal').classList.add('hidden');
         }
 
         function renderWishes() {
